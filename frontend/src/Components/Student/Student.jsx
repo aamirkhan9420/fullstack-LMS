@@ -1,9 +1,28 @@
-import { Box, Button, Grid, GridItem, Image, Text } from '@chakra-ui/react'
+import { Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton, Box, Button, Grid, GridItem, Image, Text, useDisclosure, useToast, FormControl, FormLabel, Input } from '@chakra-ui/react'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
 function Student() {
     let [student,setStudent]=useState([])
+    let [name,setName]=useState("")
+    let [email,setEmail]=useState("")
+    let [studentId,setStudentId]=useState("")
+    let [img,setImg]=useState("")
+
+
+
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const initialRef = React.useRef(null)
+    const finalRef = React.useRef(null)
+
+
+    let toast=useToast()
     let getStudentList=()=>{  
         fetch("https://lms-iliv.onrender.com/adminwork/getStudentsList",{
             method:"GET",
@@ -18,25 +37,73 @@ function Student() {
         }).catch((e)=>console.log(e))
     }
     let handleBlock=(id)=>{
+         console.log(id)
         fetch(`https://lms-iliv.onrender.com/adminwork/blockStudent/${id}`,{
-            method:"POST",
+            method:"DELETE",
             headers:{
                 "Authorization":`Bearer ${localStorage.getItem("token")}`
             }
         }).then((res)=>res.json())
         .then((res)=>{
             console.log(res.msg)
-            setStudent(res.msg)
-        
+            toast({
+                description:res.msg,
+                status:"success",
+                isClosable:true,
+                duration:9000,
+                position:"top"
+            })
+          
         }).catch((e)=>console.log(e))  
+    }
+    let handleNewStudent=()=>{
+       if(name&&email&&img&&studentId){
+        let payload={
+            name,
+            student_id:studentId,
+            image:img,
+            email,
+           
+
+        }
+           fetch("https://lms-iliv.onrender.com/adminwork/createStudent",{
+            method:'POST',
+            body:JSON.stringify(payload),
+            headers:{
+                "Authorization":`Bearer ${localStorage.getItem("token")}`
+            }
+
+
+           }).then((res)=>res.json()).then((res)=>{
+            console.log(res)
+            toast({
+                description:res.msg,
+                status:"success",
+                isClosable:true,
+                duration:9000,
+                position:"top"
+            })
+            onClose()
+            
+        }).catch((er)=>console.log(er))
+       }else{
+        toast({
+            description:"all fields required",
+            status:"error",
+            isClosable:true,
+            duration:9000,
+            position:"top"
+        })
+       }
     }
     useEffect(()=>{
         getStudentList()
-    },[])
+    },[student.length])
     return (
         <Box>
+            <Button onClick={onOpen}>Add Student</Button>
             <Box m="auto" p={5}>
-
+               
                 <Grid templateColumns={{sm:'repeat(2, 1fr)',md:'repeat(3, 1fr)',lg:'repeat(5, 1fr)'}} gap={6} >
                    {student.length>0&&student.map((el,index)=>(
                       <Box border={"1px solid gray"}  key={index} boxShadow={"md"} borderRadius={10}>
@@ -54,6 +121,46 @@ function Student() {
                   
                 </Grid>
             </Box>
+            {/* modal to add student */}
+            <>
+      <Modal
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Add New Student</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl>
+              <FormLabel>Name</FormLabel>
+              <Input value={name} onChange={(e)=>setName(e.target.value)} ref={initialRef} placeholder='Student Name' />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Email</FormLabel>
+              <Input value={email} onChange={(e)=>setEmail(e.target.value)} ref={initialRef} placeholder='Student Email' />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Student-ID</FormLabel>
+              <Input value={studentId} onChange={(e)=>setStudentId(e.target.value)} ref={initialRef} placeholder='Student-ID' />
+            </FormControl>
+            <FormControl>
+              <FormLabel>Image</FormLabel>
+              <Input value={img} onChange={(e)=>setImg(e.target.value)} ref={initialRef} placeholder=' Student Image Url' />
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={()=>handleNewStudent()}>
+              Save
+            </Button>
+            <Button onClick={onClose}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
         </Box>
     )
 }

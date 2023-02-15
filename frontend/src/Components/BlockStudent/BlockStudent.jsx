@@ -38,7 +38,7 @@ function BlockStudent() {
                                 <Text>{`Student-ID: ${el.student_id}`}</Text>
                                 <Text>{`Email-ID: ${el.email}`}</Text>
                             </Box>
-                            <Box p={2} display={"flex"} justifyContent={"space-evenly"} alignItems={"start"}><Button>Block</Button><Button>Edit</Button></Box>
+                            <Box p={2} display={"flex"} justifyContent={"space-evenly"} alignItems={"start"}><Button>Remove</Button></Box>
                         </Box>
                     ))}
 

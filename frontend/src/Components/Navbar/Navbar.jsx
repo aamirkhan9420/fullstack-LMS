@@ -64,15 +64,15 @@ function Navbar() {
                </MenuItem>
                <MenuItem >
                   <Box>
-                     <Link to={"/addstudent"}>
-                        Add-Student
+                     <Link to={"/student"}>
+                     Student
                      </Link>
                   </Box>
                </MenuItem>
                <MenuItem  >
                   <Box>
-                     <Link to={"/addblockstudent"}>
-                        Add-BlockList
+                     <Link to={"/blockstudent"}>
+                        BlockList
                      </Link>
                   </Box>
                </MenuItem>
