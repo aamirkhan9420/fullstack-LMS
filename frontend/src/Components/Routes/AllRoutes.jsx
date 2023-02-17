@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Assignments from '../Assignment/Assignments'
 import BlockStudent from '../BlockStudent/BlockStudent'
+import Edit from '../Edit/Edit'
 
 import Home from '../Home/Home'
 import Lecture from '../Lecture/Lecture'
@@ -19,10 +20,7 @@ function AllRoutes() {
         <Route path='/addassignment' element={<Assignments />}/>
         <Route path='/student' element={<Student />}/>
         <Route path='/blockstudent' element={<BlockStudent />}/>
-
-
-      
-        
+        <Route path='/edit' element={<Edit />}/>
 
     </Routes>
   )

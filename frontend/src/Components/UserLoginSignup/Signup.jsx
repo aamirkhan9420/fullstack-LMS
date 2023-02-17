@@ -21,26 +21,37 @@ function Signup() {
 
       axios.post(`https://lms-iliv.onrender.com/${location.state}/signup`,payload).then((res)=>{
        console.log(res.data.msg)
-       toast({
-           description:res.data.msg,
-           status:"success",
-           isClosable:true,
-           duration:9000,
-           position:"top"
-       })
-       navigate("/login",{state:location.state})
+       if(res.data.msg==="your blocked!"){
+        toast({
+          description:res.data.msg,
+          status:"error",
+          isClosable:true,
+          duration:9000,
+          position:"top"
+      })
+       }else{
+
+         toast({
+             description:res.data.msg,
+             status:"success",
+             isClosable:true,
+             duration:9000,
+             position:"top"
+         })
+         navigate("/login",{state:location.state})
+       }
       }).catch((er)=>{
        console.log(er)
-       toast({
+       
+      })
+    }else{
+      toast({
         description:"all fields required",
         status:"error",
         isClosable:true,
         duration:9000,
         position:"top"
     })
-      })
-    }else{
-
     }
   }
   return (
@@ -71,7 +82,7 @@ function Signup() {
       <Button onClick={handleForm}>
         submit
       </Button>
-
+      
     </Box>
 
   )

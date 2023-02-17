@@ -1,13 +1,16 @@
 
 
-import { Box, Button, Grid, Image, Text } from '@chakra-ui/react'
+import { Box, Button, Grid, Image, Text, useToast } from '@chakra-ui/react'
 
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 function BlockStudent() {
     let [student, setStudent] = useState([])
+    let [count,setCount]=useState(0)
+    let toast=useToast()
+    let isToken=localStorage.getItem("token")
+    let navigate=useNavigate()
     let getBlockStudentList = () => {
-
-
         fetch("https://lms-iliv.onrender.com/adminwork/getBlockedStudents", {
             method: "GET",
             headers: {
@@ -20,9 +23,34 @@ function BlockStudent() {
 
             }).catch((e) => console.log(e))
     }
-    useEffect(() => {
+
+let RemoveBlockedStudent=(id)=>{
+    fetch(`https://lms-iliv.onrender.com/adminwork/removeBlockStudent/${id}`, {
+        method: "DELETE",
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+    }).then((res) => res.json())
+        .then((res) => {
+            console.log(res.msg)
+            toast({
+                description:res.msg,
+                status:"success",
+                isClosable:true,
+                duration:9000,
+                position:"top"
+            })
+            setCount(count+1)
+        }).catch((e) => console.log(e))
+}
+    useEffect(() => {  
+         if(!isToken){
+         navigate("/login")
+         return
+    }
         getBlockStudentList()
-    }, [])
+    }, [count])
+ 
     return (
         <Box>
             <Box m="auto" p={5}>
@@ -38,7 +66,7 @@ function BlockStudent() {
                                 <Text>{`Student-ID: ${el.student_id}`}</Text>
                                 <Text>{`Email-ID: ${el.email}`}</Text>
                             </Box>
-                            <Box p={2} display={"flex"} justifyContent={"space-evenly"} alignItems={"start"}><Button>Remove</Button></Box>
+                            <Box p={2} display={"flex"} justifyContent={"space-evenly"} alignItems={"start"}><Button onClick={()=>RemoveBlockedStudent(el._id)}>Remove</Button></Box>
                         </Box>
                     ))}
 
