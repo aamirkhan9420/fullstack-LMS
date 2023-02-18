@@ -1,3 +1,4 @@
+import { CheckCircleIcon, NotAllowedIcon } from '@chakra-ui/icons'
 import {
   Modal,
   ModalOverlay,
@@ -19,7 +20,7 @@ function Student() {
   let [img, setImg] = useState("")
   let [idle,setIdel]=useState(0)
   let navigate = useNavigate()
-
+  let currentUser=JSON.parse(localStorage.getItem("currentUser"))
 
   const { isOpen, onOpen, onClose } = useDisclosure()
   const initialRef = React.useRef(null)
@@ -109,7 +110,7 @@ function Student() {
 
   useEffect(() => { 
     if(!isToken){
-    navigate("/login")
+    navigate("/")
       }
     getStudentList()
   }, [idle])
@@ -129,6 +130,8 @@ function Student() {
                 <Text>{`name: ${el.name}`}</Text>
                 <Text>{`Student-ID: ${el.student_id}`}</Text>
                 <Text>{`Email-ID: ${el.email}`}</Text>
+                <Text>{el.userId===currentUser.userId?<CheckCircleIcon color={"green"} />:<NotAllowedIcon color={"red"} />}</Text>
+
               </Box>
               <Box p={2} display={"flex"} justifyContent={"space-evenly"} alignItems={"start"}><Button onClick={() => handleBlock(el._id)}>Block</Button><Button onClick={() => handleEdit(el)}>Edit</Button></Box>
             </Box>

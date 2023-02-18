@@ -1,10 +1,12 @@
-import { Box, Flex, IconButton, Image, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react'
+import { Box, Flex, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react'
 import React from 'react'
-import { Link } from 'react-router-dom'
-
+import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { VscAccount } from "react-icons/vsc";
 import {  HamburgerIcon } from "@chakra-ui/icons"
 
 function Navbar() {
+   let isToken=localStorage.getItem("token")
+   let navigate=useNavigate()
    return (
 
       <Flex w={"100%"} boxShadow="sm" height={"80px"} bgColor="pink.100" align={"center"} justifyContent="space-evenly" >
@@ -35,7 +37,28 @@ function Navbar() {
                </Link>
             </Box>
             <Box>
-               signup/login
+               
+               {isToken?
+               <Menu>
+               <MenuButton
+                   as={IconButton}
+                   aria-label='Options'
+                   icon={<VscAccount />}
+               />
+              
+               <MenuList >
+
+                   <MenuItem  onClick={() => {localStorage.removeItem("token") 
+                    navigate("/")
+                  }}>Logout</MenuItem>
+
+               </MenuList>
+           </Menu>
+               
+               :<Link to={"/signup"}>
+                SignUp
+               </Link>}
+              
             </Box>
          </Flex>
 
@@ -78,9 +101,14 @@ function Navbar() {
                </MenuItem>
                <MenuItem  >
                   <Box>
-                     <Link to={"/"}>
-                        signup/login
-                     </Link>
+                     
+                     {isToken?
+                        <Text onClick={() => {localStorage.removeItem("token") 
+                        navigate("/")
+                      }}> LogOut</Text> 
+                     :<Link to={"/"}>
+                        SignUp
+                     </Link>}
                   </Box>
                </MenuItem>
             </MenuList>

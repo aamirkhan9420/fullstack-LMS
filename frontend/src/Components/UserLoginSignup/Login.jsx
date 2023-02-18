@@ -1,8 +1,9 @@
-import { Box, Button, Input, InputGroup, InputRightElement, useToast } from '@chakra-ui/react'
+import { Box, Button, Input, InputGroup, InputRightElement, Text, useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { ViewIcon } from "@chakra-ui/icons"
-import { useLocation, useNavigate } from 'react-router-dom'
+import {  useNavigate } from 'react-router-dom'
 import axios from "axios"
+import { Link } from 'react-router-dom'
 function Login() {
 
   let [email, setEmail] = useState("")
@@ -11,44 +12,46 @@ function Login() {
   const [show, setShow] = useState(false)
   const handleClick = () => setShow(!show)
 
-  let {state}=useLocation()
+  let user=localStorage.getItem("user")
 
-  let navigate=useNavigate()
-  let toast=useToast()
 
-  let handleForm=()=>{
-    let payload={email,password}
-    if(email&&password){
-      
-      axios.post(`https://lms-iliv.onrender.com/${state}/login`,payload).then((res)=>{
-       console.log(res.data.token)
-       localStorage.setItem("token",res.data.token)
-       toast({
-           description:res.data.msg,
-           status:"success",
-           isClosable:true,
-           duration:9000,
-           position:"top"
-       })
-   
-      }).catch((er)=>{
-       console.log(er)
+  let navigate = useNavigate()
+  let toast = useToast()
+
+  let handleForm = () => {
+    let payload = { email, password }
+    if (email && password) {
+
+      axios.post(`https://lms-iliv.onrender.com/${user}/login`, payload).then((res) => {
+        console.log(res.data)
+        localStorage.setItem("currentUser",JSON.stringify(res.data))
+        localStorage.setItem("token", res.data.token)
+        toast({
+          description: res.data.msg,
+          status: "success",
+          isClosable: true,
+          duration: 9000,
+          position: "top"
+        })
+       navigate("/student")
+      }).catch((er) => {
+        console.log(er)
       })
-    }else{
+    } else {
       toast({
-        description:"all fields required",
-        status:"error",
-        isClosable:true,
-        duration:9000,
-        position:"top"
-    })
+        description: "all fields required",
+        status: "error",
+        isClosable: true,
+        duration: 9000,
+        position: "top"
+      })
     }
   }
   return (
 
     <Box shadow={"lg"} w="fit-content" p={"3%"} m="auto" mt={"25vh"} borderRadius={10} display={"flex"} flexDir="column" alignItems="center" justifyContent={"center"} gap={5}>
-          Login 
-      
+      Login
+
       <InputGroup size='md'>
         <Input placeholder='Enter Email' onChange={(e) => setEmail(e.target.value)} />
       </InputGroup>
@@ -70,7 +73,12 @@ function Login() {
       <Button onClick={handleForm}>
         submit
       </Button>
-
+      <Text>If don't have account</Text>
+      <Text color={"blue"}>
+        <Link to={"/signup"}>
+          SignUp
+        </Link>
+      </Text>
     </Box>
 
   )

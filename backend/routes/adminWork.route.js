@@ -66,11 +66,12 @@ adminWork.delete("/removeBlockStudent/:id", async (req, res) => {
 
     let id = req.params.id
     let userId = req.body.userId
-    let blockStudent = await BlockListModel.findByIdAndDelete({ _id: id })
 
-    try {
+
+    try {  
+          let blockStudent = await BlockListModel.findOne({_id:id})
         if (userId == blockStudent.userId) {
-
+            await BlockListModel.findByIdAndDelete({_id:id})
             let newList = new UserListModel({ name: blockStudent.name, email: blockStudent.email, student_id: blockStudent.student_id, image: blockStudent.image, userId: blockStudent.userId })
             await newList.save()
             res.send({ "msg": `${blockStudent.student_id} id's student removed from blocked list successfully` })

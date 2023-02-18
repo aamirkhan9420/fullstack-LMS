@@ -40,7 +40,7 @@ adminRouter.post("/login", async (req, res) => {
             if (result) {
                jwt.sign({ userId: user[0]._id }, process.env.KEY, (er, token) => {
                   if (token) {
-                     res.send({ "msg": "login successful", "token": token,"name":name,"email":email })
+                     res.send({ "msg": "login successful", "token": token,"name":name,"email":email,userId:user[0]._id  })
                   } else {
                      res.send({ "msg": "login failed! please signup first", "err": er })
                   }

@@ -1,8 +1,9 @@
-import { Box, Button, Input, InputGroup, InputRightElement, useToast } from '@chakra-ui/react'
+import { Box, Button, Input, InputGroup, InputRightElement, Text, useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { ViewIcon } from "@chakra-ui/icons"
-import { useLocation, useNavigate } from 'react-router-dom'
+import {  useNavigate } from 'react-router-dom'
 import axios from "axios"
+import { Link } from 'react-router-dom'
 function Signup() {
   let [name, setName] = useState("")
   let [email, setEmail] = useState("")
@@ -11,15 +12,15 @@ function Signup() {
   const [show, setShow] = useState(false)
   const handleClick = () => setShow(!show)
 
-  let location=useLocation()
+ 
   let navigate=useNavigate()
   let toast=useToast()
-
+  let user=localStorage.getItem("user")
   let handleForm=()=>{
     let payload={name,email,password}
     if(name&&email&&password){
-
-      axios.post(`https://lms-iliv.onrender.com/${location.state}/signup`,payload).then((res)=>{
+  
+      axios.post(`https://lms-iliv.onrender.com/${user}/signup`,payload).then((res)=>{
        console.log(res.data.msg)
        if(res.data.msg==="your blocked!"){
         toast({
@@ -38,7 +39,7 @@ function Signup() {
              duration:9000,
              position:"top"
          })
-         navigate("/login",{state:location.state})
+         navigate("/login")
        }
       }).catch((er)=>{
        console.log(er)
@@ -82,7 +83,12 @@ function Signup() {
       <Button onClick={handleForm}>
         submit
       </Button>
-      
+      <Text>If have created account</Text>
+      <Text color={"blue"}>
+        <Link to={"/login"}>
+          LogIn
+        </Link>
+      </Text>
     </Box>
 
   )
