@@ -1,5 +1,6 @@
 
 
+import { CheckCircleIcon, NotAllowedIcon } from '@chakra-ui/icons'
 import { Box, Button, Grid, Image, Text, useToast } from '@chakra-ui/react'
 
 import React, { useEffect, useState } from 'react'
@@ -9,6 +10,8 @@ function BlockStudent() {
     let [count, setCount] = useState(0)
     let toast = useToast()
     let isToken = localStorage.getItem("token")
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"))
+
     let navigate = useNavigate()
     let getBlockStudentList = () => {
         fetch("https://lms-iliv.onrender.com/adminwork/getBlockedStudents", {
@@ -65,8 +68,9 @@ function BlockStudent() {
                                 <Text>{`name: ${el.name}`}</Text>
                                 <Text>{`Student-ID: ${el.student_id}`}</Text>
                                 <Text>{`Email-ID: ${el.email}`}</Text>
+                                <Text>{el.userId === currentUser.userId ? <CheckCircleIcon color={"green"} /> : <NotAllowedIcon color={"red"} />}</Text>
                             </Box>
-                            <Box p={2} display={"flex"} justifyContent={"space-evenly"} alignItems={"start"}><Button onClick={() => RemoveBlockedStudent(el._id)}>Remove</Button></Box>
+                            <Box  p={2} display={"flex"} justifyContent={"space-evenly"} alignItems={"start"}><Button onClick={() => RemoveBlockedStudent(el._id)}>Remove</Button></Box>
                         </Box>
                     ))}
 

@@ -18,14 +18,14 @@ function Student() {
   let [email, setEmail] = useState("")
   let [studentId, setStudentId] = useState("")
   let [img, setImg] = useState("")
-  let [idle,setIdel]=useState(0)
+  let [idle, setIdel] = useState(0)
   let navigate = useNavigate()
-  let currentUser=JSON.parse(localStorage.getItem("currentUser"))
+  let currentUser = JSON.parse(localStorage.getItem("currentUser"))
 
   const { isOpen, onOpen, onClose } = useDisclosure()
   const initialRef = React.useRef(null)
   const finalRef = React.useRef(null)
-  let isToken=localStorage.getItem("token")
+  let isToken = localStorage.getItem("token")
 
   let toast = useToast()
   let getStudentList = () => {
@@ -51,7 +51,7 @@ function Student() {
     }).then((res) => res.json())
       .then((res) => {
         console.log(res.msg)
-       setIdel(idle+1)
+        setIdel(idle + 1)
         toast({
           description: res.msg,
           status: "success",
@@ -82,7 +82,7 @@ function Student() {
 
       }).then((res) => res.json()).then((res) => {
         console.log(res)
-        setIdel(idle+1)
+        setIdel(idle + 1)
         toast({
           description: res.msg,
           status: "success",
@@ -108,32 +108,32 @@ function Student() {
     navigate("/edit", { state: el })
   }
 
-  useEffect(() => { 
-    if(!isToken){
-    navigate("/")
-      }
+  useEffect(() => {
+    if (!isToken) {
+      navigate("/")
+    }
     getStudentList()
   }, [idle])
- 
+
   return (
-    <Box>
-      <Button onClick={onOpen}>Add Student</Button>
+    <Box bgColor={student.length > 0 ? "#c5c1c0" : ""}>
+      <Button bg={"blue.500"} color={"white"} onClick={onOpen}>Add Student</Button>
       <Box m="auto" p={5}>
 
         <Grid templateColumns={{ sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)', lg: 'repeat(5, 1fr)' }} gap={6} >
           {student.length > 0 && student.map((el, index) => (
-            <Box border={"1px solid gray"} key={index} boxShadow={"md"} borderRadius={10}>
+            <Box border={"1px solid gray"} key={index} boxShadow={"md"} borderRadius={10} bgColor={"#66b9bf"} >
               <Box h={"50%"} m="auto" w={"100%"}>
-                <Image borderRadius={10} h={"100%"} w={"100%"} src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlXCTlMvfcUMsJ4r4seTYMY8_k8V31eV3LKUxkdR34n0BurNYuarum86BROpRlbhoQlxU&usqp=CAU' />
+                <Image borderTopRightRadius={10} borderTopRadius={10} h={"100%"} w={"100%"} src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlXCTlMvfcUMsJ4r4seTYMY8_k8V31eV3LKUxkdR34n0BurNYuarum86BROpRlbhoQlxU&usqp=CAU' />
               </Box>
-              <Box display={"flex"} h={"30%"} flexDir="column" justifyContent={"space-between"} >
+              <Box display={"flex"} h={"30%"} flexDir="column" justifyContent={"space-between"} color={"whiteAlpha.900"} fontWeight={500} >
                 <Text>{`name: ${el.name}`}</Text>
                 <Text>{`Student-ID: ${el.student_id}`}</Text>
                 <Text>{`Email-ID: ${el.email}`}</Text>
-                <Text>{el.userId===currentUser.userId?<CheckCircleIcon color={"green"} />:<NotAllowedIcon color={"red"} />}</Text>
+                <Text>{el.userId === currentUser.userId ? <CheckCircleIcon color={"green"} /> : <NotAllowedIcon color={"red"} />}</Text>
 
               </Box>
-              <Box p={2} display={"flex"} justifyContent={"space-evenly"} alignItems={"start"}><Button onClick={() => handleBlock(el._id)}>Block</Button><Button onClick={() => handleEdit(el)}>Edit</Button></Box>
+              <Box p={2} display={"flex"} justifyContent={"space-evenly"} alignItems={"start"}><Button bg={'red'} color={"white"} onClick={() => handleBlock(el._id)}>Block</Button><Button bg={"blue.500"} color={"white"} p={5} onClick={() => handleEdit(el)}>Edit</Button></Box>
             </Box>
           ))}
 

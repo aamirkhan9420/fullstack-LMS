@@ -2,63 +2,64 @@ import { Box, Flex, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Tex
 import React from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { VscAccount } from "react-icons/vsc";
-import {  HamburgerIcon } from "@chakra-ui/icons"
+import { HamburgerIcon } from "@chakra-ui/icons"
 
 function Navbar() {
-   let isToken=localStorage.getItem("token")
-   let navigate=useNavigate()
+   let isToken = localStorage.getItem("token")
+   let navigate = useNavigate()
    return (
 
-      <Flex w={"100%"} boxShadow="sm" height={"80px"} bgColor="pink.100" align={"center"} justifyContent="space-evenly" >
+      <Flex w={"100%"} boxShadow="sm" height={"80px"} align={"center"} justifyContent="space-evenly" bgColor={"#66b9bf"} >
          <Box>
             <Link to={"/"}>
                <Image src='https://www.masaischool.com/img/navbar/logo.svg' />
             </Link>
          </Box>
          <Flex display={["none", "none", "none", "flex"]} align={"center"} justifyContent="space-evenly" width={"70%"} fontSize={['10px', '14px', '16px', '16px']} color="teal.900" fontWeight={500}>
-            <Box>
+            <Box color={"white"}>
                <Link to={"/addassignment"}>
                   Add-Assignments
                </Link>
             </Box>
-            <Box>
+            <Box color={"white"}>
                <Link to={"/addlecture"}>
                   Add-Lectures
                </Link>
             </Box>
-            <Box>
+            <Box color={"white"}>
                <Link to={"/student"}>
                   Student
                </Link>
             </Box>
-            <Box>
+            <Box color={"white"}>
                <Link to={"/blockstudent"}>
-               BlockList
+                  BlockList
                </Link>
             </Box>
-            <Box>
-               
-               {isToken?
-               <Menu>
-               <MenuButton
-                   as={IconButton}
-                   aria-label='Options'
-                   icon={<VscAccount />}
-               />
-              
-               <MenuList >
+            <Box color={"white"}>
 
-                   <MenuItem  onClick={() => {localStorage.removeItem("token") 
-                    navigate("/")
-                  }}>Logout</MenuItem>
+               {isToken ?
+                  <Menu>
+                     <MenuButton
+                        as={IconButton}
+                        aria-label='Options'
+                        icon={<VscAccount />}
+                     />
 
-               </MenuList>
-           </Menu>
-               
-               :<Link to={"/signup"}>
-                SignUp
-               </Link>}
-              
+                     <MenuList >
+
+                        <MenuItem onClick={() => {
+                           localStorage.removeItem("token")
+                           navigate("/")
+                        }}>Logout</MenuItem>
+
+                     </MenuList>
+                  </Menu>
+
+                  : <Link to={"/signup"}>
+                     SignUp
+                  </Link>}
+
             </Box>
          </Flex>
 
@@ -88,7 +89,7 @@ function Navbar() {
                <MenuItem >
                   <Box>
                      <Link to={"/student"}>
-                     Student
+                        Student
                      </Link>
                   </Box>
                </MenuItem>
@@ -101,14 +102,15 @@ function Navbar() {
                </MenuItem>
                <MenuItem  >
                   <Box>
-                     
-                     {isToken?
-                        <Text onClick={() => {localStorage.removeItem("token") 
-                        navigate("/")
-                      }}> LogOut</Text> 
-                     :<Link to={"/"}>
-                        SignUp
-                     </Link>}
+
+                     {isToken ?
+                        <Text onClick={() => {
+                           localStorage.removeItem("token")
+                           navigate("/")
+                        }}> LogOut</Text>
+                        : <Link to={"/"}>
+                           SignUp
+                        </Link>}
                   </Box>
                </MenuItem>
             </MenuList>
