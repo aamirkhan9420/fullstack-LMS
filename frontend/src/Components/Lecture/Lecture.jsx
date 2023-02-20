@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, useToast } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import GridComp from '../GridComp/GridComp'
 
@@ -11,13 +11,12 @@ function Lecture() {
   let [teacher_name, setTeacher_name] = useState([])
   let [lecture_id, setlecture_id] = useState([])
   let [lecture_type, setlecture_type] = useState([])
-
-  
-  
-
+  let [idle, setIdel] = useState(0)
+  let toast = useToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const initialRef = React.useRef(null)
   const finalRef = React.useRef(null)
+
   let getLectures = () => {
     fetch("https://lms-iliv.onrender.com/adminwork/getLectures", {
       method: "GET",
@@ -28,23 +27,87 @@ function Lecture() {
 
     }).then((res) => res.json()).then((res) => {
 
-      // console.log(res.msg)
+      console.log(res.msg)
       setLecture(res.msg)
     }).catch((er) => console.log(er))
   }
-  let handleNewLecture=()=>{
+  let handleNewLecture = () => {
 
+    if (topic_name && lecture_date && lecture_time && teacher_name && lecture_id && lecture_type) {
+      let payload = {
+        topic_name,
+        lecture_date,
+        lecture_time,
+        teacher_name,
+        lecture_id,
+        lecture_type: lecture_type.toString().toUpperCase()
+
+      }
+      fetch("https://lms-iliv.onrender.com/adminwork/createLecture", {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+
+
+      }).then((res) => res.json()).then((res) => {
+        console.log(res)
+        setIdel(idle + 1)
+        toast({
+          description: res.msg,
+          status: "success",
+          isClosable: true,
+          duration: 9000,
+          position: "top"
+        })
+
+        onClose()
+
+      }).catch((er) => console.log(er))
+    } else {
+      toast({
+        description: "all fields required",
+        status: "error",
+        isClosable: true,
+        duration: 9000,
+        position: "top"
+      })
+    }
+  }
+  let handleDelete = (id) => {
+    console.log(id)
+    fetch(`https://lms-iliv.onrender.com/adminwork//removelecture/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      }
+    }).then((res) => res.json())
+      .then((res) => {
+        console.log(res.msg)
+        setIdel(idle + 1)
+        toast({
+          description: res.msg,
+          status: "success",
+          isClosable: true,
+          duration: 9000,
+          position: "top"
+        })
+
+      }).catch((e) => console.log(e))
   }
   useEffect(() => {
     getLectures()
-  }, [])
+  }, [idle])
   return (
-    <Box p={{ sm: 30, md: 30, lg: 100 }}>
-      <Button bg={"blue.500"} color={"white"} onClick={onOpen}>Add Student</Button>
+    <Box p={{ sm: 30, md: 30 }} bgColor={lecture.length > 0 ? "#e9e7da" : ""}>
+      <Button bg={"green"} color={"white"} onClick={onOpen}>Add Lecture</Button>
 
-      <GridComp prop={lecture} />
-       {/* modal to add student */}
-       <>
+      <GridComp prop={lecture} handleDelete={handleDelete}/>
+
+      {/* modal to add lecture */}
+      <>
         <Modal
           initialFocusRef={initialRef}
           finalFocusRef={finalRef}
@@ -62,11 +125,11 @@ function Lecture() {
               </FormControl>
               <FormControl>
                 <FormLabel>Lecture Date</FormLabel>
-                <Input value={lecture_date} onChange={(e) => setLecture_date(e.target.value)} ref={initialRef} placeholder='Lecture Email' />
+                <Input type="date" value={lecture_date} onChange={(e) => setLecture_date(e.target.value)} ref={initialRef} placeholder='Lecture Date' />
               </FormControl>
               <FormControl>
                 <FormLabel>Lecture Time</FormLabel>
-                <Input value={lecture_time} onChange={(e) => setLecture_time(e.target.value)} ref={initialRef} placeholder='Lecture Time' />
+                <Input type={"time"} value={lecture_time} onChange={(e) => setLecture_time(e.target.value)} ref={initialRef} placeholder='Lecture Time' />
               </FormControl>
               <FormControl>
                 <FormLabel>Teacher Name</FormLabel>
@@ -80,7 +143,7 @@ function Lecture() {
                 <FormLabel>Lecture Type </FormLabel>
                 <Input value={lecture_type} onChange={(e) => setlecture_type(e.target.value)} ref={initialRef} placeholder=' Lecture Type' />
               </FormControl>
-              
+
             </ModalBody>
 
             <ModalFooter>

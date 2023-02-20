@@ -23,7 +23,7 @@ function Navbar() {
             </Box>
             <Box color={"white"}>
                <Link to={"/addlecture"}>
-                  Add-Lectures
+                  Lectures
                </Link>
             </Box>
             <Box color={"white"}>
@@ -39,14 +39,16 @@ function Navbar() {
             <Box color={"white"}>
 
                {isToken ?
-                  <Menu>
+                  <Menu >
                      <MenuButton
                         as={IconButton}
                         aria-label='Options'
                         icon={<VscAccount />}
+                        bg="variant"
+                       fontSize={25}
                      />
 
-                     <MenuList >
+                     <MenuList bgColor={"black"} color={"black"}>
 
                         <MenuItem onClick={() => {
                            localStorage.removeItem("token")
@@ -82,7 +84,7 @@ function Navbar() {
                <MenuItem >
                   <Box>
                      <Link to={"/addlecture"}>
-                        Add-Lectures
+                        Lectures
                      </Link>
                   </Box>
                </MenuItem>
@@ -100,8 +102,8 @@ function Navbar() {
                      </Link>
                   </Box>
                </MenuItem>
-               <MenuItem  >
-                  <Box>
+               <MenuItem >
+                  <Box >
 
                      {isToken ?
                         <Text onClick={() => {

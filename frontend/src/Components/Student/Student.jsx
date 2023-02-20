@@ -117,10 +117,10 @@ function Student() {
 
   return (
     <Box bgColor={student.length > 0 ? "#c5c1c0" : ""}>
-      <Button bg={"blue.500"} color={"white"} onClick={onOpen}>Add Student</Button>
+    
       <Box m="auto" p={5}>
-
-        <Grid templateColumns={{ sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)', lg: 'repeat(5, 1fr)' }} gap={6} >
+  <Button bg={"green"} color={"white"} onClick={onOpen}>Add Student</Button>
+        <Grid templateColumns={{ sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)', lg: 'repeat(5, 1fr)' }} gap={6} p={6}>
           {student.length > 0 && student.map((el, index) => (
             <Box border={"1px solid gray"} key={index} boxShadow={"md"} borderRadius={10} bgColor={"#66b9bf"} >
               <Box h={"50%"} m="auto" w={"100%"}>
@@ -133,7 +133,7 @@ function Student() {
                 <Text>{el.userId === currentUser.userId ? <CheckCircleIcon color={"green"} /> : <NotAllowedIcon color={"red"} />}</Text>
 
               </Box>
-              <Box p={2} display={"flex"} justifyContent={"space-evenly"} alignItems={"start"}><Button bg={'red'} color={"white"} onClick={() => handleBlock(el._id)}>Block</Button><Button bg={"blue.500"} color={"white"} p={5} onClick={() => handleEdit(el)}>Edit</Button></Box>
+              <Box p={2} display={"flex"} justifyContent={"space-evenly"} alignItems={"start"}><Button bg={'red'} color={"white"} onClick={() => handleBlock(el._id)}>Block</Button><Button bg={"green"} color={"white"} p={5} onClick={() => handleEdit(el)}>Edit</Button></Box>
             </Box>
           ))}
 
