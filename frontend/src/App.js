@@ -2,15 +2,15 @@
 import { lazy, Suspense } from 'react';
 import './App.css';
 import Navbar from './Components/Navbar/Navbar';
-// import AllRoutes from './Components/Routes/AllRoutes';
-let AllRoutes=lazy(()=>import('./Components/Routes/AllRoutes'))
+import AllRoutes from './Components/Routes/AllRoutes';
+// let AllRoutes=lazy(()=>import('./Components/Routes/AllRoutes'))
 function App() {
   return (
     <div className="App"> 
     <Navbar />
-      <Suspense fallback={<div>Loading....</div>}>
+      {/* <Suspense fallback={<div>Loading....</div>}> */}
 <AllRoutes />
-      </Suspense>
+      {/* </Suspense> */}
    
     
     

@@ -1,21 +1,29 @@
-import { Box, Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, useToast } from '@chakra-ui/react'
+import { Box, Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, useDisclosure, useToast } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import GridComp from '../GridComp/GridComp'
 
 
 function Lecture() {
   let [lecture, setLecture] = useState([])
-  let [topic_name, setTopic_name] = useState([])
-  let [lecture_date, setLecture_date] = useState([])
-  let [lecture_time, setLecture_time] = useState([])
-  let [teacher_name, setTeacher_name] = useState([])
-  let [lecture_id, setlecture_id] = useState([])
-  let [lecture_type, setlecture_type] = useState([])
+  let [topic_name, setTopic_name] = useState("")
+  let [lecture_date, setLecture_date] = useState("")
+  let [lecture_time, setLecture_time] = useState("")
+  let [teacher_name, setTeacher_name] = useState("")
+  let [lecture_id, setlecture_id] = useState("")
+  let [lecture_type, setlecture_type] = useState("")
   let [idle, setIdel] = useState(0)
   let toast = useToast()
+  let yearnow = new Date().getFullYear()
+  let monthnow = new Date().getMonth() + 1;
+  monthnow = monthnow.toString()
+  let daynow = new Date().getDate().toString()
+
+  let currdate = `${yearnow}-${monthnow.length === 1 ? 0 + monthnow : monthnow}-${daynow.length === 1 ? 0 + daynow : daynow}`
+
   const { isOpen, onOpen, onClose } = useDisclosure()
   const initialRef = React.useRef(null)
   const finalRef = React.useRef(null)
+
 
   let getLectures = () => {
     fetch("https://lms-iliv.onrender.com/adminwork/getLectures", {
@@ -33,9 +41,14 @@ function Lecture() {
   }
   let handleNewLecture = () => {
 
+
     if (topic_name && lecture_date && lecture_time && teacher_name && lecture_id && lecture_type) {
+
+      const topic_name_upper = topic_name.charAt(0).toUpperCase() + topic_name.slice(1);
+      teacher_name = teacher_name.charAt(0).toUpperCase() + teacher_name.slice(1);
+
       let payload = {
-        topic_name,
+        topic_name: topic_name_upper,
         lecture_date,
         lecture_time,
         teacher_name,
@@ -104,7 +117,7 @@ function Lecture() {
     <Box p={{ sm: 30, md: 30 }} bgColor={lecture.length > 0 ? "#e9e7da" : ""}>
       <Button bg={"green"} color={"white"} onClick={onOpen}>Add Lecture</Button>
 
-      <GridComp prop={lecture} handleDelete={handleDelete}/>
+      <GridComp prop={lecture} handleDelete={handleDelete} />
 
       {/* modal to add lecture */}
       <>
@@ -125,7 +138,7 @@ function Lecture() {
               </FormControl>
               <FormControl>
                 <FormLabel>Lecture Date</FormLabel>
-                <Input type="date" value={lecture_date} onChange={(e) => setLecture_date(e.target.value)} ref={initialRef} placeholder='Lecture Date' />
+                <Input min={currdate} type="date" value={lecture_date} onChange={(e) => setLecture_date(e.target.value)} ref={initialRef} placeholder='Lecture Date' />
               </FormControl>
               <FormControl>
                 <FormLabel>Lecture Time</FormLabel>
@@ -141,7 +154,12 @@ function Lecture() {
               </FormControl>
               <FormControl>
                 <FormLabel>Lecture Type </FormLabel>
-                <Input value={lecture_type} onChange={(e) => setlecture_type(e.target.value)} ref={initialRef} placeholder=' Lecture Type' />
+                <Select value={lecture_type} onChange={(e) => setlecture_type(e.target.value)} ref={initialRef}>
+                  <option value="">Select Lecture Type</option>
+                  <option value="LIVE">LIVE</option>
+                  <option value="VIDEO">VIDEO</option>
+
+                </Select>
               </FormControl>
 
             </ModalBody>

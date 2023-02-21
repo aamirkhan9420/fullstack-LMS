@@ -116,7 +116,7 @@ function Student() {
   }, [idle])
 
   return (
-    <Box bgColor={student.length > 0 ? "#c5c1c0" : ""}>
+    <Box bgColor={student.length > 0 ? "#e9e7da" : ""}>
     
       <Box m="auto" p={5}>
   <Button bg={"green"} color={"white"} onClick={onOpen}>Add Student</Button>
