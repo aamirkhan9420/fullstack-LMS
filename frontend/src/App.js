@@ -5,6 +5,7 @@ import Navbar from './Components/Navbar/Navbar';
 import AllRoutes from './Components/Routes/AllRoutes';
 // let AllRoutes=lazy(()=>import('./Components/Routes/AllRoutes'))
 function App() {
+
   return (
     <div className="App"> 
     <Navbar />

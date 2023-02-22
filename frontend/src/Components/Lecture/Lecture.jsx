@@ -10,7 +10,15 @@ function Lecture() {
   let [lecture_time, setLecture_time] = useState("")
   let [teacher_name, setTeacher_name] = useState("")
   let [lecture_id, setlecture_id] = useState("")
-  let [lecture_type, setlecture_type] = useState("")
+  let [lecture_type, setlecture_type] = useState(false)
+  let [temp,setTemp]=useState("")
+  let [editId,setEditId]=useState("")
+
+
+
+
+  
+
   let [idle, setIdel] = useState(0)
   let toast = useToast()
   let yearnow = new Date().getFullYear()
@@ -56,8 +64,11 @@ function Lecture() {
         lecture_type: lecture_type.toString().toUpperCase()
 
       }
-      fetch("https://lms-iliv.onrender.com/adminwork/createLecture", {
-        method: 'POST',
+      onClose()
+      let url=temp?`https://lms-iliv.onrender.com/adminwork/editlecture/${editId}`:"https://lms-iliv.onrender.com/adminwork/createLecture"
+      let method=temp?"PATCH":"POST"
+      fetch(url, {
+        method: method,
         body: JSON.stringify(payload),
         headers: {
           'Content-Type': 'application/json',
@@ -76,10 +87,12 @@ function Lecture() {
           position: "top"
         })
 
-        onClose()
+       
+        setTemp(false)
 
       }).catch((er) => console.log(er))
     } else {
+      setTemp(false)
       toast({
         description: "all fields required",
         status: "error",
@@ -90,8 +103,8 @@ function Lecture() {
     }
   }
   let handleDelete = (id) => {
-    console.log(id)
-    fetch(`https://lms-iliv.onrender.com/adminwork//removelecture/${id}`, {
+   
+    fetch(`https://lms-iliv.onrender.com/adminwork/removelecture/${id}`, {
       method: "DELETE",
       headers: {
         "Authorization": `Bearer ${localStorage.getItem("token")}`
@@ -107,8 +120,23 @@ function Lecture() {
           duration: 9000,
           position: "top"
         })
+        
 
       }).catch((e) => console.log(e))
+  }
+  let handleModal=(e)=>{
+  
+   
+    setTopic_name(e.topic_name)
+    setLecture_date(e.lecture_date)
+    setLecture_time(e.lecture_time)
+    setTeacher_name(e.teacher_name)
+    setlecture_id(e.lecture_id)
+    setlecture_type(e.lecture_type)
+    setTemp(true)
+    setEditId(e._id)
+     onOpen()
+   
   }
   useEffect(() => {
     getLectures()
@@ -117,7 +145,7 @@ function Lecture() {
     <Box p={{ sm: 30, md: 30 }} bgColor={lecture.length > 0 ? "#e9e7da" : ""}>
       <Button bg={"green"} color={"white"} onClick={onOpen}>Add Lecture</Button>
 
-      <GridComp prop={lecture} handleDelete={handleDelete} />
+      <GridComp prop={lecture} handleDelete={handleDelete}  handleModal={handleModal}/>
 
       {/* modal to add lecture */}
       <>
