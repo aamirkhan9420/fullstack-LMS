@@ -12,14 +12,17 @@ function GridComp({ prop, handleDelete, handleModal }) {
                         <Box display={"flex"} flexDir={{ base: "column", sm: "column", md: "column", lg: "column" }} >
                             <Box>
                                 <Text color={"#4F46EF"} fontWeight={500} fontSize={"1.2rem"}>
-                                    {el.topic_name} ({el.lecture_date})  <Badge variant='solid' colorScheme={el.lecture_type == "LIVE" ? "green" : "blue"}>
+                                    {el.topic_name} ({el.lecture_date?el.lecture_date:el.assignment_date}) 
+                                     {el.lecture_type?<Badge variant='solid' colorScheme={el.lecture_type == "LIVE" ? "green" : "blue"}>
                                         {el.lecture_type}
-                                    </Badge>
+                                    </Badge>:<Badge variant='solid' bgColor="#1f2939">
+                                        {el.assignment_type}
+                                    </Badge>}
                                 </Text>
                             </Box>
                             <Box>
                                 <Text fontWeight={"300"} color={"white"}>
-                                    <span style={{ fontWeight: "600" }}>{el.teacher_name}</span>  sheduled <span style={{ fontWeight: "600" }}>{el.topic_name}</span> at {el.lecture_date}-{el.lecture_time}
+                                    <span style={{ fontWeight: "600" }}>{el.teacher_name}</span>  sheduled <span style={{ fontWeight: "600" }}>{el.topic_name}</span> at {el.lecture_date?el.lecture_date:el.assignment_date}-{el.lecture_time?el.lecture_time:el.assignment_time}
                                 </Text>
                             </Box>
                         </Box>
@@ -40,4 +43,4 @@ function GridComp({ prop, handleDelete, handleModal }) {
     )
 }
 
-export default React.memo(GridComp)
+export default GridComp

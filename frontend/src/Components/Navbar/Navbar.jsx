@@ -22,7 +22,7 @@ function Navbar() {
          {isToken && <Flex  display={["none", "none", "none", "flex"]} align={"center"} justifyContent="space-evenly" width={"70%"} fontSize={['10px', '14px', '16px', '16px']} color="teal.900" fontWeight={600}>
             <Box color={"white"}>
                <Link to={"/addassignment"}>
-                  Add-Assignments
+                 Assignments
                </Link>
             </Box>
             <Box color={"white"}>

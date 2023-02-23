@@ -15,10 +15,6 @@ function Lecture() {
   let [editId,setEditId]=useState("")
 
 
-
-
-  
-
   let [idle, setIdel] = useState(0)
   let toast = useToast()
   let yearnow = new Date().getFullYear()
@@ -201,6 +197,7 @@ function Lecture() {
           </ModalContent>
         </Modal>
       </>
+      
     </Box>
   )
 }
