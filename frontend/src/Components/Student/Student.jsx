@@ -116,10 +116,10 @@ function Student() {
   }, [idle])
 
   return (
-    <Box bgColor={student.length > 0 ? "#e9e7da" : ""}>
-    
+    <Box>
+
       <Box m="auto" p={5}>
-  <Button bg={"green"} color={"white"} onClick={onOpen}>Add Student</Button>
+        <Button bg={"green"} color={"white"} onClick={onOpen}>Add Student</Button>
         <Grid templateColumns={{ sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)', lg: 'repeat(5, 1fr)' }} gap={6} p={6}>
           {student.length > 0 && student.map((el, index) => (
             <Box border={"1px solid gray"} key={index} boxShadow={"md"} borderRadius={10} bgColor={"#66b9bf"} >
@@ -130,18 +130,17 @@ function Student() {
                 <Text>{`name: ${el.name}`}</Text>
                 <Text>{`Student-ID: ${el.student_id}`}</Text>
                 <Text>{`Email-ID: ${el.email}`}</Text>
-            
-
               </Box>
-             {el.userId === currentUser.userId? <Box p={2} display={"flex"} justifyContent={"space-evenly"} alignItems={"start"}>
+              {el.userId === currentUser.userId ? <Box p={2} display={"flex"} justifyContent={"space-evenly"} alignItems={"start"}>
                 <Button bg={'red'} color={"white"} onClick={() => handleBlock(el._id)}>Block</Button>
                 <Button bg={"green"} color={"white"} p={5} onClick={() => handleEdit(el)}>Edit</Button>
-                </Box>:""}
+              </Box> : ""}
             </Box>
           ))}
 
         </Grid>
       </Box>
+
       {/* modal to add student */}
       <>
         <Modal

@@ -1,14 +1,17 @@
 import React from 'react'
-import { Badge, Box, Button, Flex, Grid, Spinner, Text } from "@chakra-ui/react"
-function GridComp({ prop, handleDelete, handleModal }) {
+import { Badge, Box, Button, Flex, Grid, Skeleton, Spinner, Text } from "@chakra-ui/react"
+function GridComp({ prop, handleDelete, handleModal ,isLoading}) {
     let currentUser = JSON.parse(localStorage.getItem("currentUser"))
-
+    
     console.log(prop)
     return (
         <Box w={"80%"} margin={"auto"} >
+           
             <Grid templateColumns={{ sm: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(1, 1fr)' }} gap={6}>
                 {prop.length > 0 && prop.map((el, index) => (
+                
                     <Flex key={index} p={5} w="100%" bgColor={"#66b9bf"} flexDir={{ base: "column", sm: "row", md: "column", lg: "row" }} justifyContent="space-between" alignItems={"center"} textAlign="left">
+                       
                         <Box display={"flex"} flexDir={{ base: "column", sm: "column", md: "column", lg: "column" }} >
                             <Box>
                                 <Text color={"#4F46EF"} fontWeight={500} fontSize={"1.2rem"}>
@@ -34,8 +37,9 @@ function GridComp({ prop, handleDelete, handleModal }) {
                             <Button onClick={() => handleDelete(el._id)} bgColor={"red"} color={"white"} p={2}>Delete</Button>
 
                         </Box> : ""}
-
+                      
                     </Flex>
+                   
                 ))}
             </Grid>
 

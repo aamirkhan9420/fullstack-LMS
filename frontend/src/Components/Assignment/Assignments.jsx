@@ -1,7 +1,8 @@
-import { Box, Button, FormControl, FormLabel, Grid, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, useDisclosure, useToast } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
-import GridComp from '../GridComp/GridComp'
+import { Box, Button, FormControl, FormLabel, Grid, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Spinner, useDisclosure, useToast } from '@chakra-ui/react'
+import React, { lazy, Suspense, useEffect, useState } from 'react'
+import Navbar from '../Navbar/Navbar'
 
+let GridComp=lazy(()=>wait(1000).then(()=>import('../GridComp/GridComp')))
 function Assignments() {
   let [assignment, setAssignment] = useState([])
   let [topic_name, setTopic_name] = useState("")
@@ -12,6 +13,7 @@ function Assignments() {
   let [assignment_type, setAssignment_type] = useState(false)
   let [temp, setTemp] = useState("")
   let [editId, setEditId] = useState("")
+  
 
 
   let [idle, setIdel] = useState(0)
@@ -143,10 +145,14 @@ function Assignments() {
   }, [idle])
   return (
     <Box p={{ sm: 30, md: 30 }}>
-   
+    
       <Button bg={"green"} color={"white"} onClick={onOpen}>Add Assignment</Button>
 
+      <Suspense fallback={<Box m={"auto"} mt={"40vh"}><Spinner /></Box>}>
+
       <GridComp prop={assignment} handleDelete={handleDelete} handleModal={handleModal} />
+      </Suspense>
+
 
  {/* modal to add Assignment */}
  <>
@@ -208,3 +214,10 @@ function Assignments() {
 }
 
 export default Assignments
+let wait=(t)=>{
+  return new Promise(res=>{
+    setTimeout(() => {
+        res()
+    }, t);
+  })
+}

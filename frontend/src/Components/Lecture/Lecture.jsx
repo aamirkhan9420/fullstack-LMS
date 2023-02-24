@@ -1,7 +1,7 @@
-import { Box, Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, useDisclosure, useToast } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
-import GridComp from '../GridComp/GridComp'
+import { Box, Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Spinner, useDisclosure, useToast } from '@chakra-ui/react'
+import React, { lazy, Suspense, useEffect, useState } from 'react'
 
+let GridComp=lazy(()=>wait(1000).then(()=>import('../GridComp/GridComp')))
 
 function Lecture() {
   let [lecture, setLecture] = useState([])
@@ -138,10 +138,12 @@ function Lecture() {
     getLectures()
   }, [idle])
   return (
-    <Box p={{ sm: 30, md: 30 }} bgColor={lecture.length > 0 ? "#e9e7da" : ""}>
+    <Box p={{ sm: 30, md: 30 }} >
       <Button bg={"green"} color={"white"} onClick={onOpen}>Add Lecture</Button>
+<Suspense fallback={<Box m={"auto"} mt={"40vh"}><Spinner /></Box>}>
 
       <GridComp prop={lecture} handleDelete={handleDelete}  handleModal={handleModal}/>
+</Suspense>
 
       {/* modal to add lecture */}
       <>
@@ -197,9 +199,17 @@ function Lecture() {
           </ModalContent>
         </Modal>
       </>
-      
+
     </Box>
   )
 }
 
 export default Lecture
+
+let wait=(t)=>{
+  return new Promise(res=>{
+    setTimeout(() => {
+        res()
+    }, t);
+  })
+}

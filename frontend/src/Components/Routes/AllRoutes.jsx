@@ -1,5 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
+import Courses from '../../Landing/Coureses/Courses'
+import FeessandPap from '../../Landing/FeesAndPaP/FeessandPap'
 import Assignments from '../Assignment/Assignments'
 import BlockStudent from '../BlockStudent/BlockStudent'
 import Edit from '../Edit/Edit'
@@ -21,6 +23,10 @@ function AllRoutes() {
         <Route path='/student' element={<Student />}/>
         <Route path='/blockstudent' element={<BlockStudent />}/>
         <Route path='/edit' element={<Edit />}/>
+        <Route path='/courses' element={<Courses/>}/>
+        <Route path='/fees' element={<FeessandPap/>}/>
+
+
 
     </Routes>
   )
