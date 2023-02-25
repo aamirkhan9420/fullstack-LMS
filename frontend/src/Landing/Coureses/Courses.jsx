@@ -2,6 +2,7 @@ import { CalendarIcon, TimeIcon } from '@chakra-ui/icons'
 import { Badge, Box, Button, Grid, Image, Text } from '@chakra-ui/react'
 import { HiOutlineCurrencyRupee } from "react-icons/hi"
 import React from 'react'
+import Footer from '../../Components/Footer/Footer'
 
 function Courses() {
     let arr = [
@@ -92,6 +93,7 @@ function Courses() {
 
                 </Grid>
             </Box>
+            <Footer />
         </Box>
     )
 }
