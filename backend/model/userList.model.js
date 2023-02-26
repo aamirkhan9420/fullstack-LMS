@@ -4,7 +4,10 @@ const userListschema=mongoose.Schema({
     student_id:String,
     image:String,
     email:String,
-    userId:String
+    state:String,
+    course:String,
+    coursetime:String,
+    userId:String,
 })
 const UserListModel=mongoose.model("adminwork",userListschema)
 module.exports={UserListModel}

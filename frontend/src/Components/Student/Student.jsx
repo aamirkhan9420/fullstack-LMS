@@ -11,6 +11,7 @@ import {
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import ApplicationSlider from '../ApplicationSlider'
 
 function Student() {
   let [student, setStudent] = useState([])
@@ -19,7 +20,9 @@ function Student() {
   let [studentId, setStudentId] = useState("")
   let [img, setImg] = useState("")
   let [idle, setIdel] = useState(0)
+  let [application,setApplication]=useState([])
   let navigate = useNavigate()
+
   let currentUser = JSON.parse(localStorage.getItem("currentUser"))
 
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -108,11 +111,26 @@ function Student() {
     navigate("/edit", { state: el })
   }
 
+  let getApplicationList = () => {
+    fetch("https://lms-iliv.onrender.com/application/getapplicationlist", {
+      method: "GET",
+      headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+               }
+    }).then((res) => res.json())
+      .then((res) => {
+        console.log(res.msg)
+        setApplication(res.msg)
+
+      }).catch((e) => console.log(e))
+  }
+ 
   useEffect(() => {
     if (!isToken) {
       navigate("/")
     }
     getStudentList()
+    getApplicationList()
   }, [idle])
 
   return (
@@ -120,6 +138,8 @@ function Student() {
 
       <Box m="auto" p={5}>
         <Button bg={"green"} color={"white"} onClick={onOpen}>Add Student</Button>
+
+        <ApplicationSlider application={application}/>
         <Grid templateColumns={{ sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)', lg: 'repeat(5, 1fr)' }} gap={6} p={6}>
           {student.length > 0 && student.map((el, index) => (
             <Box border={"1px solid gray"} key={index} boxShadow={"md"} borderRadius={10} bgColor={"#66b9bf"} >
