@@ -1,10 +1,13 @@
 import { CalendarIcon, TimeIcon } from '@chakra-ui/icons'
-import { Badge, Box, Button, Grid, Image, Text } from '@chakra-ui/react'
+import { Badge, Box, Button, Grid, Image, Text, useToast } from '@chakra-ui/react'
 import { HiOutlineCurrencyRupee } from "react-icons/hi"
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Footer from '../../Components/Footer/Footer'
 
 function Courses() {
+     let toast=useToast()
+     let [isPresent,setIsPresent]=useState(false)
+     let [isIndex,setIndex]=useState("")
     let arr = [
         {
             url: 'https://masai-website-images.s3.ap-south-1.amazonaws.com/opt1_b53f83aefc.webp',
@@ -31,6 +34,75 @@ function Courses() {
             weeks: "Launch your career in 22 weeks", rs: "Pay after placement of 10 LPA or above"
         },
     ]
+    let user=JSON.parse(localStorage.getItem("currentUser"))
+   
+    let handleApplication=(el,index)=>{
+
+        let payload={
+
+               name:user.name,
+               email:user.email,
+               state:user.state,
+               course:el.course,
+               index:index,
+               coursetime:el.type,
+            
+        }
+       
+      fetch("https://lms-iliv.onrender.com/application/createapplication",{
+            method:"POST",
+            body:JSON.stringify(payload),
+            headers:{
+                "content-type":'application/json',
+                 "Authorization":`Bearer ${localStorage.getItem("token")}`
+            }
+
+        }).then((res)=>res.json()).then((res)=>{
+           console.log(res) 
+           getApplication()
+
+           toast({
+            description: res.msg,
+            status: "success",
+            isClosable: true,
+            duration: 9000,
+            position: "top"
+          })
+
+        }
+        
+        ).catch((er)=>console.log(er))
+    }
+    // ----------fetching applications-----------//
+    let getApplication=()=>{
+    fetch("https://lms-iliv.onrender.com/application/getapplicationlist",{
+
+        method:"GET",
+        headers:{           
+             "Authorization":`Bearer ${localStorage.getItem("token")}`
+               }
+
+    }).then((res)=>res.json()).then((res)=>{
+             
+          for(let i=0;i<res.msg.length;i++){
+            if(res.msg[i].email===(user.email)){
+                 setIndex(res.msg[i].index)
+                setIsPresent(true)
+                return
+            }else{
+                setIsPresent(false)
+              
+
+            }
+          }
+    }
+    
+    ).catch((er)=>console.log(er))
+}
+console.log(isPresent)
+useEffect(()=>{
+    getApplication()
+})
     return (
         <Box m={"auto"} >
             <Box p={10} >
@@ -44,9 +116,9 @@ function Courses() {
             <Box w={{ base: "100%", sm: "90%", md: "100%", lg: "100%" }} m={"auto"} p={{ base: 1, sm: 2, md: 3, lg: 5, xl: 10 }}>
               
                 <Grid w={"fit-content"} m={"auto"} templateColumns={{ base: "repeat(1,1fr)", sm: 'repeat(1,1fr)', md: 'repeat(1,1fr)', lg: 'repeat(2,1fr)', xl: 'repeat(3,1fr)' }} gap={{ base: 2, sm: 3, md: 4, lg: 5, xl: 6 }} >
-                    {arr.map((el) => (
+                    {arr.map((el,index) => (
 
-                        <Box  >
+                        <Box key={index} >
                             {/* --------- */}
                             <Box width={"100%"}>
                                 <Image width={"100%"} src={el.url} />
@@ -85,7 +157,7 @@ function Courses() {
                                 </Box>
                                 {/* -------- */}
                                 <Box w={"fit-content"}>
-                                    <Button color={"white"} bgColor={"#ED0331"}>APPLY NOW</Button>
+                                    <Button color={"white"} isDisabled={index==isIndex&&isPresent?true:false}  bgColor={index==isIndex&&isPresent?"orange":"#ED0331"} onClick={()=>handleApplication(el,index)}>{index==isIndex&&isPresent?"In Progress..": "APPLY NOW"}</Button>
                                 </Box>
                             </Box>
                         </Box>

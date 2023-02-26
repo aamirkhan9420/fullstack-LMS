@@ -37,7 +37,7 @@ studentRouter.post("/signup", async (req, res) => {
 studentRouter.post("/login", async (req, res) => {
     let { email, password } = req.body
     let user = await StudentModel.find({ email })
-    console.log(user.length)
+   
     try {
         let isblocked = await BlockListModel.findOne({ email })
         if (isblocked) {

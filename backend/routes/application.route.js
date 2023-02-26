@@ -11,7 +11,7 @@ const applicationtRoute = express.Router()
 // --------create application -----//
 
 applicationtRoute.post("/createapplication", async (req, res) => {
-    let { name, email,state,course,coursetime, userId} = req.body
+    let { name, email,state,course,coursetime, index,userId} = req.body
 
     //----check if applicant  is already exist or not----//
     let isUserIdPresent = await UserListModel.findOne({ userId: userId })
@@ -19,7 +19,7 @@ applicationtRoute.post("/createapplication", async (req, res) => {
         res.send({ "msg": ` student already persuing course` })
     } else {
         try {
-            let newApplicant = new ApplicationModel({name, email,state,course,coursetime, userId })
+            let newApplicant = new ApplicationModel({name, email,state,course,coursetime, userId ,index})
             await newApplicant.save()
             res.send({ "msg": "Application submited successfully " })
         } catch (error) {

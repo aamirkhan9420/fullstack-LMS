@@ -1,4 +1,4 @@
-import { Box, Button, Input, InputGroup, InputRightElement, Text, useToast } from '@chakra-ui/react'
+import { Box, Button, Input, InputGroup, InputRightElement, Select, Text, useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { ViewIcon } from "@chakra-ui/icons"
 import {  useNavigate } from 'react-router-dom'
@@ -8,6 +8,8 @@ function Signup() {
   let [name, setName] = useState("")
   let [email, setEmail] = useState("")
   let [password, setPassword] = useState("")
+  let [state, setState] = useState("")
+  let [isLoading,setLoading]=useState(false)
 
   const [show, setShow] = useState(false)
   const handleClick = () => setShow(!show)
@@ -17,9 +19,9 @@ function Signup() {
   let toast=useToast()
   let user=localStorage.getItem("user")
   let handleForm=()=>{
-    let payload={name,email,password}
-    if(name&&email&&password){
-  
+    let payload={name,email,password,state}
+    if(name&&email&&password&&state){
+      setLoading(true)
       axios.post(`https://lms-iliv.onrender.com/${user}/signup`,payload).then((res)=>{
        console.log(res.data.msg)
        if(res.data.msg==="your blocked!"){
@@ -39,6 +41,7 @@ function Signup() {
              duration:9000,
              position:"top"
          })
+         setLoading(false)
          navigate("/login")
        }
       }).catch((er)=>{
@@ -55,6 +58,10 @@ function Signup() {
     })
     }
   }
+  let arr=["Select State",
+  "Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka",
+"Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana",
+"Tripura","Uttarakhand","Uttar Pradesh","West Bengal"]
   return (
 
     <Box shadow={"lg"} w="fit-content" p={"3%"} m="auto" mt={"25vh"} borderRadius={10} display={"flex"} flexDir="column" alignItems="center" justifyContent={"center"} gap={5}>
@@ -64,6 +71,14 @@ function Signup() {
       </InputGroup>
       <InputGroup size='md'>
         <Input placeholder='Enter Email' onChange={(e) => setEmail(e.target.value)} />
+      </InputGroup>
+      <InputGroup size='md'>
+         <Select onChange={(e)=>setState(e.target.value)}>
+          {arr.map((el,index)=>(
+            <option key={index}>{el}</option>
+          ))}
+                  
+         </Select>
       </InputGroup>
       <InputGroup size='md'>
         <Input
@@ -80,7 +95,8 @@ function Signup() {
         </InputRightElement>
       </InputGroup>
 
-      <Button onClick={handleForm}>
+      <Button onClick={handleForm}   isLoading={isLoading?true:false}
+    loadingText='Submitting'>
         submit
       </Button>
       <Text>If have created account</Text>

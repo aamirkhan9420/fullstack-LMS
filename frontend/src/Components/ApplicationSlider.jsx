@@ -23,7 +23,7 @@ export default  function ApplicationSlider({application}) {
         >
           <DrawerOverlay />
           <DrawerContent bgColor={"#66b9bf"}>
-            <DrawerCloseButton />
+            <DrawerCloseButton  fontSize={20} color={"white"}/>
             <DrawerHeader fontSize={25} fontWeight={600} color={"white"}>Applcations</DrawerHeader>
   
             <DrawerBody >

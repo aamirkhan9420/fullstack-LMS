@@ -8,7 +8,7 @@ function Login() {
 
   let [email, setEmail] = useState("")
   let [password, setPassword] = useState("")
-
+  let [isLoading,setLoading]=useState(false)
   const [show, setShow] = useState(false)
   const handleClick = () => setShow(!show)
 
@@ -21,8 +21,10 @@ function Login() {
   let handleForm = () => {
     let payload = { email, password }
     if (email && password) {
-
+      setLoading(true)
+  
       axios.post(`https://lms-iliv.onrender.com/${user}/login`, payload).then((res) => {
+       
         console.log(res.data)
         localStorage.setItem("currentUser",JSON.stringify(res.data))
         localStorage.setItem("token", res.data.token)
@@ -33,7 +35,9 @@ function Login() {
           duration: 9000,
           position: "top"
         })
-       navigate("/student")
+      
+        setLoading(false)
+       navigate("/courses")
       }).catch((er) => {
         console.log(er)
       })
@@ -70,7 +74,7 @@ function Login() {
         </InputRightElement>
       </InputGroup>
 
-      <Button onClick={handleForm}>
+      <Button onClick={handleForm} isLoading={isLoading?true:false} loadingText="Submitting">
         submit
       </Button>
       <Text>If don't have account</Text>
