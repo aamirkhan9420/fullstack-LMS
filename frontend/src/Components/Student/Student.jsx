@@ -6,25 +6,33 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  ModalCloseButton, Box, Button, Grid, GridItem, Image, Text, useDisclosure, useToast, FormControl, FormLabel, Input
+  ModalCloseButton, Box, Button, Grid, GridItem, Image, Text, useDisclosure, useToast, FormControl, FormLabel, Input, Badge
 } from '@chakra-ui/react'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ApplicationSlider from '../ApplicationSlider'
+import Navbar from '../Navbar/Navbar'
 
 function Student() {
   let [student, setStudent] = useState([])
   let [name, setName] = useState("")
   let [email, setEmail] = useState("")
   let [studentId, setStudentId] = useState("")
-  let [img, setImg] = useState("")
+  let [state, setState] = useState("")
+  let [course, setCourse] = useState("")
+  let [coursetime, setCoursetime] = useState("")
+  let [index, setIndex] = useState("")
+
+
+
+  let [img, setImg] = useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlXCTlMvfcUMsJ4r4seTYMY8_k8V31eV3LKUxkdR34n0BurNYuarum86BROpRlbhoQlxU&usqp=CAU")
   let [idle, setIdel] = useState(0)
-  let [application,setApplication]=useState([])
+  let [application, setApplication] = useState([])
   let navigate = useNavigate()
 
   let currentUser = JSON.parse(localStorage.getItem("currentUser"))
-
+  let user=localStorage.getItem("user")
   const { isOpen, onOpen, onClose } = useDisclosure()
   const initialRef = React.useRef(null)
   const finalRef = React.useRef(null)
@@ -65,6 +73,28 @@ function Student() {
 
       }).catch((e) => console.log(e))
   }
+  let handleDelete=(id)=>{
+ 
+    fetch(`https://lms-iliv.onrender.com/adminwork/DeleteStudent/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      }
+    }).then((res) => res.json())
+      .then((res) => {
+console.log(res)
+        setIdel(idle + 1)
+        toast({
+          description: res.msg,
+          status: "success",
+          isClosable: true,
+          duration: 9000,
+          position: "top"
+        })
+
+      }).catch((e) => console.log(e))
+
+  }
   let handleNewStudent = () => {
     if (name && email && img && studentId) {
       let payload = {
@@ -72,6 +102,10 @@ function Student() {
         student_id: studentId,
         image: img,
         email: email,
+        state: state,
+        course: course,
+        coursetime: coursetime,
+        index:index
 
       }
       fetch("https://lms-iliv.onrender.com/adminwork/createStudent", {
@@ -115,8 +149,8 @@ function Student() {
     fetch("https://lms-iliv.onrender.com/application/getapplicationlist", {
       method: "GET",
       headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-               }
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      }
     }).then((res) => res.json())
       .then((res) => {
         console.log(res.msg)
@@ -124,9 +158,34 @@ function Student() {
 
       }).catch((e) => console.log(e))
   }
- 
+  let removeFromApplicationList = (id) => {
+
+    fetch(`https://lms-iliv.onrender.com/application//removeapplicant/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`
+      }
+    }).then((res) => res.json())
+      .then((res) => {
+        console.log(res.msg)
+      
+
+      }).catch((e) => console.log(e))
+
+  }
+  let OpenModal = (el) => {
+    onOpen()
+    setName(el.name)
+    setEmail(el.email)
+    setState(el.state)
+    setCourse(el.course)
+    setCoursetime(el.coursetime)
+    setIndex(Number(el.index))
+
+    removeFromApplicationList(el._id)
+  }
   useEffect(() => {
-    if (!isToken) {
+    if (!isToken||user==="student") {
       navigate("/")
     }
     getStudentList()
@@ -135,26 +194,34 @@ function Student() {
 
   return (
     <Box>
-
+ <Navbar />
       <Box m="auto" p={5}>
-        <Button bg={"green"} color={"white"} onClick={onOpen}>Add Student</Button>
+ 
 
-        <ApplicationSlider application={application}/>
-        <Grid templateColumns={{ sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)', lg: 'repeat(5, 1fr)' }} gap={6} p={6}>
+        <ApplicationSlider application={application} getApplicationList={getApplicationList} OpenModal={OpenModal} />
+        <Grid templateColumns={{ sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)', lg: 'repeat(5, 1fr)' }} gap={6} p={2} alignItems={"center"}>
           {student.length > 0 && student.map((el, index) => (
             <Box border={"1px solid gray"} key={index} boxShadow={"md"} borderRadius={10} bgColor={"#66b9bf"} >
               <Box h={"50%"} m="auto" w={"100%"}>
                 <Image borderTopRightRadius={10} borderTopRadius={10} h={"100%"} w={"100%"} src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlXCTlMvfcUMsJ4r4seTYMY8_k8V31eV3LKUxkdR34n0BurNYuarum86BROpRlbhoQlxU&usqp=CAU' />
               </Box>
-              <Box display={"flex"} h={"30%"} flexDir="column" justifyContent={"space-between"} color={"whiteAlpha.900"} fontWeight={500} >
+              <Box display={"flex"} flexDir="column" justifyContent={"space-between"} color={"whiteAlpha.900"} fontWeight={500} >
                 <Text>{`name: ${el.name}`}</Text>
                 <Text>{`Student-ID: ${el.student_id}`}</Text>
                 <Text>{`Email-ID: ${el.email}`}</Text>
+                <Text>{`State: ${el.state}`}</Text>
+                <Text>{`Course: ${el.course}`} <Badge >{el.coursetime}</Badge></Text>
+              
+
               </Box>
-              {el.userId === currentUser.userId ? <Box p={2} display={"flex"} justifyContent={"space-evenly"} alignItems={"start"}>
-                <Button bg={'red'} color={"white"} onClick={() => handleBlock(el._id)}>Block</Button>
-                <Button bg={"green"} color={"white"} p={5} onClick={() => handleEdit(el)}>Edit</Button>
-              </Box> : ""}
+              <Grid templateColumns={{ sm: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)',xl:"repeat(3, 1fr)" }} gap={2} p={2} alignItems={"center"}>
+
+                <Button bg={'orange'} color={"white"} fontSize={15} p={3}  onClick={() => handleBlock(el._id)}>Block</Button>
+
+                <Button bg={'red'} color={"white"} fontSize={15} p={2}  onClick={() => handleDelete(el._id)}>Delete</Button>
+
+                <Button bg={"green"} color={"white"}  fontSize={15} onClick={() => handleEdit(el)}> Edit </Button>
+              </Grid> 
             </Box>
           ))}
 
@@ -185,6 +252,22 @@ function Student() {
               <FormControl>
                 <FormLabel>Student-ID</FormLabel>
                 <Input value={studentId} onChange={(e) => setStudentId(e.target.value)} ref={initialRef} placeholder='Student-ID' />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Course</FormLabel>
+                <Input value={course} onChange={(e) => setCourse(e.target.value)} ref={initialRef} placeholder=' Student Course' />
+              </FormControl>
+              <FormControl>
+                <FormLabel>CourseType</FormLabel>
+                <Input value={coursetime} onChange={(e) => setCoursetime(e.target.value)} ref={initialRef} placeholder=' Student Course Time' />
+              </FormControl>
+              <FormControl>
+                <FormLabel>State</FormLabel>
+                <Input value={state} onChange={(e) => setState(e.target.value)} ref={initialRef} placeholder=' Student State ' />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Index</FormLabel>
+                <Input value={index} onChange={(e) => setIndex(e.target.value)} ref={initialRef} placeholder=' Student Index ' />
               </FormControl>
               <FormControl>
                 <FormLabel>Image</FormLabel>

@@ -1,5 +1,7 @@
 import { Box, Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Spinner, useDisclosure, useToast } from '@chakra-ui/react'
 import React, { lazy, Suspense, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import Navbar from '../Navbar/Navbar'
 
 let GridComp=lazy(()=>wait(1000).then(()=>import('../GridComp/GridComp')))
 
@@ -13,7 +15,11 @@ function Lecture() {
   let [lecture_type, setlecture_type] = useState(false)
   let [temp,setTemp]=useState("")
   let [editId,setEditId]=useState("")
-
+  
+  let isToken = localStorage.getItem("token")
+  let currentUser = JSON.parse(localStorage.getItem("currentUser"))
+  let user=localStorage.getItem("user")
+  let navigate = useNavigate()
 
   let [idle, setIdel] = useState(0)
   let toast = useToast()
@@ -135,9 +141,14 @@ function Lecture() {
    
   }
   useEffect(() => {
+    if (!isToken||user==="student") {
+      navigate("/")
+    }
     getLectures()
   }, [idle])
   return (
+    <>
+     <Navbar />
     <Box p={{ sm: 30, md: 30 }} >
       <Button bg={"green"} color={"white"} onClick={onOpen}>Add Lecture</Button>
 <Suspense fallback={<Box m={"auto"} mt={"40vh"}><Spinner /></Box>}>
@@ -201,6 +212,7 @@ function Lecture() {
       </>
 
     </Box>
+    </>
   )
 }
 

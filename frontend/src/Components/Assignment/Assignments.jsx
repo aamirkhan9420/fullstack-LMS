@@ -1,5 +1,6 @@
 import { Box, Button, FormControl, FormLabel, Grid, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Spinner, useDisclosure, useToast } from '@chakra-ui/react'
 import React, { lazy, Suspense, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Navbar from '../Navbar/Navbar'
 
 let GridComp=lazy(()=>wait(1000).then(()=>import('../GridComp/GridComp')))
@@ -13,7 +14,9 @@ function Assignments() {
   let [assignment_type, setAssignment_type] = useState(false)
   let [temp, setTemp] = useState("")
   let [editId, setEditId] = useState("")
-  
+  let navigate=useNavigate()
+  let isToken=localStorage.getItem("token")
+  let user=localStorage.getItem("user")
 
 
   let [idle, setIdel] = useState(0)
@@ -141,11 +144,16 @@ function Assignments() {
   }
 
   useEffect(() => {
+    if(!isToken||user==="student"){
+    navigate("/")
+    }
     getAssignment()
   }, [idle])
   return (
+    <>
+     <Navbar />
     <Box p={{ sm: 30, md: 30 }}>
-    
+     
       <Button bg={"green"} color={"white"} onClick={onOpen}>Add Assignment</Button>
 
       <Suspense fallback={<Box m={"auto"} mt={"40vh"}><Spinner /></Box>}>
@@ -210,6 +218,7 @@ function Assignments() {
       </>
 
     </Box>
+    </>
   )
 }
 

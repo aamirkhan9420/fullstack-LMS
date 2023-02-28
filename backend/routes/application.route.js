@@ -14,14 +14,21 @@ applicationtRoute.post("/createapplication", async (req, res) => {
     let { name, email,state,course,coursetime, index,userId} = req.body
 
     //----check if applicant  is already exist or not----//
-    let isUserIdPresent = await UserListModel.findOne({ userId: userId })
+    let isUserIdPresent = await UserListModel.findOne({ email: email })
     if (isUserIdPresent) {
-        res.send({ "msg": ` student already persuing course` })
+        res.send({ "msg": "student already persuing course" })
     } else {
         try {
-            let newApplicant = new ApplicationModel({name, email,state,course,coursetime, userId ,index})
+              let isPresent=await ApplicationModel.findOne({email: email})
+              if(isPresent){
+        res.send({ "msg": " You can apply for one course at a time " })
+
+              }else{
+                 let newApplicant = new ApplicationModel({name, email,state,course,coursetime, userId ,index})
             await newApplicant.save()
             res.send({ "msg": "Application submited successfully " })
+              }
+           
         } catch (error) {
             res.send({ "msg": error })
         }
@@ -44,18 +51,11 @@ applicationtRoute.get("/getapplicationlist", async (req, res) => {
 applicationtRoute.delete("/removeapplicant/:id", async (req, res) => {
 
     let id = req.params.id
-    let userId = req.body.userId
-    let applicant = await ApplicationModel.findOne({ _id: id })
-
-    try {
-        if (userId == applicant.userId) {
-
+       try {
              await ApplicationModel.findByIdAndDelete({ _id: id })
          
             res.send({ "msg": `rejected` })
-        } else {
-            res.send({ "msg": "not authorized" })
-        }
+        
     } catch (error) {
         res.send({ "msg": error })
     }

@@ -4,6 +4,7 @@ import { ViewIcon } from "@chakra-ui/icons"
 import {  useNavigate } from 'react-router-dom'
 import axios from "axios"
 import { Link } from 'react-router-dom'
+import Navbar from '../Navbar/Navbar'
 function Signup() {
   let [name, setName] = useState("")
   let [email, setEmail] = useState("")
@@ -63,17 +64,19 @@ function Signup() {
 "Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana",
 "Tripura","Uttarakhand","Uttar Pradesh","West Bengal"]
   return (
+<>
+<Navbar />
 
-    <Box shadow={"lg"} w="fit-content" p={"3%"} m="auto" mt={"25vh"} borderRadius={10} display={"flex"} flexDir="column" alignItems="center" justifyContent={"center"} gap={5}>
-          Signup 
+    <Box bgColor={"#66b9bf"} color={"white"} shadow={"lg"} w="fit-content" p={"3%"} m="auto" mt={"15vh"} borderRadius={10} display={"flex"} flexDir="column" alignItems="center" justifyContent={"center"} gap={5}>
+         <Text fontWeight={600} fontSize={25}>SignUp </Text> 
       <InputGroup size='md'>
-        <Input placeholder='Enter Name' onChange={(e) => setName(e.target.value)} />
+        <Input  bgColor={"white"}  color={"black"}  placeholder='Enter Name' onChange={(e) => setName(e.target.value)} />
       </InputGroup>
       <InputGroup size='md'>
-        <Input placeholder='Enter Email' onChange={(e) => setEmail(e.target.value)} />
+        <Input  bgColor={"white"}  color={"black"}  placeholder='Enter Email' onChange={(e) => setEmail(e.target.value)} />
       </InputGroup>
       <InputGroup size='md'>
-         <Select onChange={(e)=>setState(e.target.value)}>
+         <Select onChange={(e)=>setState(e.target.value)} color={"black"} bgColor={"white"}>
           {arr.map((el,index)=>(
             <option key={index}>{el}</option>
           ))}
@@ -86,27 +89,29 @@ function Signup() {
           type={show ? 'text' : 'password'}
           placeholder='Enter password'
           onChange={(e) => setPassword(e.target.value)}
+          bgColor={"white"}  
+          color={"black"} 
         />
 
         <InputRightElement width='4.5rem'>
-          <Button h='1.75rem' size='sm' onClick={handleClick}>
-            <ViewIcon />
+          <Button h='1.75rem' size='sm'   onClick={handleClick}>
+            <ViewIcon  color={"black"} />
           </Button>
         </InputRightElement>
       </InputGroup>
 
-      <Button onClick={handleForm}   isLoading={isLoading?true:false}
+      <Button onClick={handleForm} color={"white"}  bgColor={"green"} isLoading={isLoading?true:false}
     loadingText='Submitting'>
         submit
       </Button>
-      <Text>If have created account</Text>
-      <Text color={"blue"}>
+      <Text fontWeight={600} fontSize={20}>If have created account !</Text>
+      <Text color={"blue"} fontWeight={600} fontSize={20}>
         <Link to={"/login"}>
           LogIn
         </Link>
       </Text>
     </Box>
-
+</>
   )
 }
 

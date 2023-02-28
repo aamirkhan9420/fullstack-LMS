@@ -4,6 +4,7 @@ import { ViewIcon } from "@chakra-ui/icons"
 import {  useNavigate } from 'react-router-dom'
 import axios from "axios"
 import { Link } from 'react-router-dom'
+import Navbar from '../Navbar/Navbar'
 function Login() {
 
   let [email, setEmail] = useState("")
@@ -24,20 +25,25 @@ function Login() {
       setLoading(true)
   
       axios.post(`https://lms-iliv.onrender.com/${user}/login`, payload).then((res) => {
-       
-        console.log(res.data)
+        let l=Object.keys(res.data).length
+        
         localStorage.setItem("currentUser",JSON.stringify(res.data))
         localStorage.setItem("token", res.data.token)
         toast({
           description: res.data.msg,
-          status: "success",
+          status: l===1?"error":"success",
           isClosable: true,
           duration: 9000,
           position: "top"
         })
       
         setLoading(false)
-       navigate("/courses")
+        if(user==="admin"&&l!=1){
+            navigate("/student")
+        }else if(user==="student"&&l!=1){
+          navigate("/courses")
+        }
+     
       }).catch((er) => {
         console.log(er)
       })
@@ -52,12 +58,14 @@ function Login() {
     }
   }
   return (
+<>
+<Navbar />
 
-    <Box shadow={"lg"} w="fit-content" p={"3%"} m="auto" mt={"25vh"} borderRadius={10} display={"flex"} flexDir="column" alignItems="center" justifyContent={"center"} gap={5}>
-      Login
+    <Box   bgColor={"#66b9bf"} color={"white"} shadow={"lg"} w="fit-content" p={"3%"} m="auto" mt={"25vh"} borderRadius={10} display={"flex"} flexDir="column" alignItems="center" justifyContent={"center"} gap={5}>
+      <Text fontWeight={600} fontSize={25}>Login</Text>
 
       <InputGroup size='md'>
-        <Input placeholder='Enter Email' onChange={(e) => setEmail(e.target.value)} />
+        <Input bgColor={"white"}  color={"black"} placeholder='Enter Email' onChange={(e) => setEmail(e.target.value)} />
       </InputGroup>
       <InputGroup size='md'>
         <Input
@@ -65,26 +73,28 @@ function Login() {
           type={show ? 'text' : 'password'}
           placeholder='Enter password'
           onChange={(e) => setPassword(e.target.value)}
+          bgColor={"white"}
+          color={"black"}
         />
 
         <InputRightElement width='4.5rem'>
           <Button h='1.75rem' size='sm' onClick={handleClick}>
-            <ViewIcon />
+            <ViewIcon color={"black"}/>
           </Button>
         </InputRightElement>
       </InputGroup>
 
-      <Button onClick={handleForm} isLoading={isLoading?true:false} loadingText="Submitting">
+      <Button onClick={handleForm} bgColor={"green"} isLoading={isLoading?true:false} loadingText="Submitting">
         submit
       </Button>
-      <Text>If don't have account</Text>
-      <Text color={"blue"}>
+      <Text fontWeight={600} fontSize={20}>If don't have account !</Text>
+      <Text color={"blue"} fontWeight={600} fontSize={20}>
         <Link to={"/signup"}>
           SignUp
         </Link>
       </Text>
     </Box>
-
+</>
   )
 }
 

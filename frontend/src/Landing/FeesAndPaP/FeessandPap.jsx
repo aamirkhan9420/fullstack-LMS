@@ -8,9 +8,13 @@ import { BsLightningCharge } from "react-icons/bs"
 
 import React from 'react'
 import Footer from '../../Components/Footer/Footer'
+import StudentNavbar from '../NavStudent/StudentNavbar'
 
 function FeessandPap() {
   return (
+    <>
+    <StudentNavbar />
+   
     <Box margin={"auto"} display={"flex"} flexDir={"column"} gap={20}>
       {/*--------------- Top heading and description-----------------------*/}
       <Box p={10} w={{base:"100%",sm:"100%", md:"80%", lg:"80%"}} margin={"auto"}>
@@ -104,11 +108,10 @@ function FeessandPap() {
             <Text>In the event you are not working or if your income drops below 5LPA or 10LPA(Only for L2 MasaiX. course), the PAP payments pause*</Text>
           </Box>
         </Box>
-
-
       </Box>
 <Footer />
     </Box>
+    </>
   )
 }
 

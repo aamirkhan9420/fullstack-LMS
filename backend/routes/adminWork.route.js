@@ -11,15 +11,15 @@ const adminWork = express.Router()
 // --------create student -----//
 
 adminWork.post("/createStudent", async (req, res) => {
-    let { name, email, student_id, image, userId,state ,course,coursetime} = req.body
-  
+    let { name, email, student_id, image, userId, state, course, coursetime ,index} = req.body
+
     //----check if student with this student id is already exist or not----//
     let isUserIdPresent = await UserListModel.findOne({ student_id: student_id })
     if (isUserIdPresent) {
         res.send({ "msg": ` student with student id ${student_id} already exist` })
     } else {
         try {
-            let newUser = new UserListModel({ name, email, student_id, image, userId,state ,course,coursetime })
+            let newUser = new UserListModel({ name, email, student_id, image, userId, state, course, coursetime ,index})
             await newUser.save()
             res.send({ "msg": "new student added" })
         } catch (error) {
@@ -44,19 +44,13 @@ adminWork.get("/getStudentsList", async (req, res) => {
 adminWork.delete("/blockStudent/:id", async (req, res) => {
 
     let id = req.params.id
-    let userId = req.body.userId
-    let student = await UserListModel.findOne({ _id: id })
-
     try {
-        if (userId == student.userId) {
 
-            let student = await UserListModel.findByIdAndDelete({ _id: id })
-            let newBlockStudent = new BlockListModel({ name: student.name, email: student.email, student_id: student.student_id, image: student.image, userId: student.userId,state:student.state ,course:student.course,coursetime:student.coursetime })
-            await newBlockStudent.save()
-            res.send({ "msg": `${student.student_id} id's student blocked successfully` })
-        } else {
-            res.send({ "msg": "not authorized" })
-        }
+        let student = await UserListModel.findByIdAndDelete({ _id: id })
+        let newBlockStudent = new BlockListModel({ name: student.name, email: student.email, student_id: student.student_id, image: student.image, userId: student.userId, state: student.state, course: student.course, coursetime: student.coursetime ,index:student.index})
+        await newBlockStudent.save()
+        res.send({ "msg": `${student.student_id} id's student blocked successfully` })
+
     } catch (error) {
         res.send({ "msg": error })
     }
@@ -65,20 +59,32 @@ adminWork.delete("/blockStudent/:id", async (req, res) => {
 adminWork.delete("/removeBlockStudent/:id", async (req, res) => {
 
     let id = req.params.id
-    let userId = req.body.userId
+    try {
+        let blockStudent = await BlockListModel.findOne({ _id: id })
+
+        await BlockListModel.findByIdAndDelete({ _id: id })
+        let newList = new UserListModel({ name: blockStudent.name, email: blockStudent.email, student_id: blockStudent.student_id, image: blockStudent.image, userId: blockStudent.userId, state: blockStudent.state, course: blockStudent.course, coursetime: blockStudent.coursetime,index:blockStudent.index })
+        await newList.save()
+        res.send({ "msg": `${blockStudent.student_id} id's student removed from blocked list successfully` })
 
 
-    try {  
-          let blockStudent = await BlockListModel.findOne({_id:id})
-        if (userId == blockStudent.userId) {
-            await BlockListModel.findByIdAndDelete({_id:id})
-            let newList = new UserListModel({ name: blockStudent.name, email: blockStudent.email, student_id: blockStudent.student_id, image: blockStudent.image, userId: blockStudent.userId,state:blockStudent.state ,course:blockStudent.course,coursetime:blockStudent.coursetime  })
-            await newList.save()
-            res.send({ "msg": `${blockStudent.student_id} id's student removed from blocked list successfully` })
+    } catch (error) {
+        console.log(error)
+        res.send({ "msg": error })
+    }
+})
+// --------------Delete Student-------------------//
+adminWork.delete("/DeleteStudent/:id", async (req, res) => {
 
-        } else {
-            res.send({ "msg": "not authorized" })
-        }
+    let id = req.params.id
+    try {
+    
+
+      let student = await UserListModel.findByIdAndDelete({ _id: id })
+        await newList.save()
+        res.send({ "msg": `Student deleted successfully` })
+
+
     } catch (error) {
         console.log(error)
         res.send({ "msg": error })
@@ -101,17 +107,13 @@ adminWork.get("/getBlockedStudents", async (req, res) => {
 adminWork.patch("/editStudent/:id", async (req, res) => {
     let data = req.body
     let id = req.params.id
-    let userId = req.body.userId
-    let student = await UserListModel.findOne({ _id: id })
+
 
     try {
-        if (userId == student.userId) {
-            let student = await UserListModel.findByIdAndUpdate({ _id: id }, data)
+        let student = await UserListModel.findByIdAndUpdate({ _id: id }, data)
 
-            res.send({ "msg": `${student.student_id} id's student information updated successfully` })
-        } else {
-            res.send({ "msg": "not authorized" })
-        }
+        res.send({ "msg": `${student.student_id} id's student information updated successfully` })
+
     } catch (error) {
         res.send({ "msg": error })
     }

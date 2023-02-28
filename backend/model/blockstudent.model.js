@@ -4,7 +4,10 @@ const blockListschema=mongoose.Schema({
     student_id:String,
     image:String,
     email:String,
-    userId:String
+    state:String,
+    course:String,
+    coursetime:String,
+    userId:String,
 })
 const BlockListModel=mongoose.model("blockstudent",blockListschema)
 module.exports={BlockListModel}
