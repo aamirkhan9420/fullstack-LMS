@@ -6,11 +6,19 @@ import { BsLightningCharge } from "react-icons/bs"
 
 
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import Footer from '../../Components/Footer/Footer'
 import StudentNavbar from '../NavStudent/StudentNavbar'
+import { useNavigate } from 'react-router-dom'
 
 function FeessandPap() {
+  let isToken=localStorage.getItem("token")
+  let navigate=useNavigate()
+  useEffect(()=>{
+    if(!isToken){
+      navigate("/")
+   }
+  })
   return (
     <>
     <StudentNavbar />

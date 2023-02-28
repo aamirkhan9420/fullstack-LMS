@@ -1,21 +1,29 @@
 import { Box, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Icon, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Stack, Text, useDisclosure } from '@chakra-ui/react'
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, Navigate, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { VscAccount } from "react-icons/vsc";
 import { HamburgerIcon } from "@chakra-ui/icons"
+import StateKing from '../../Components/StateKing/StateKing';
 
-function StudentNavbar() {
+function StudentNavbar({ inUserList }) {
     let isToken = localStorage.getItem("token")
     let navigate = useNavigate()
-    let { pathname } = useLocation()
-    console.log(pathname)
+    let [kingImg, setKingImg] = useState("")
+    let [kingName, setKingName] = useState("")
+
     //=========for drawer=========//
     const { isOpen, onOpen, onClose } = useDisclosure()
     const btnRef = useRef()
+
+    useEffect(() => {
+        let obj = StateKing()
+        setKingImg(obj.url)
+        setKingName(obj.king)
+    })
     return (
 
         <Flex zIndex={700} w={"100%"} boxShadow="sm" height={"80px"} align={"center"} justifyContent="space-evenly" bgColor={"#66b9bf"} position="sticky" top={0}  >
-            <Box>
+            <Box >
                 <Link to={"/"}>
                     <Image src='https://www.masaischool.com/img/navbar/logo.svg' />
                 </Link>
@@ -31,17 +39,29 @@ function StudentNavbar() {
                     <Link to={"/fees"}>
                         FEES & PAP
                     </Link>
-                </Box>
+                </Box> 
+               
+                {inUserList && <Box color={"white"}>
+                    <Link to={"/lms"}>
+                        LMS
+                    </Link>
+                </Box>}
+
                 <Box color={"white"}>
 
                     {isToken ?
                         <Menu >
                             <MenuButton
                                 as={IconButton}
-                                aria-label='Options'
-                                icon={<VscAccount />}
+                                borderRadius={"50%"}
+                                icon={
+                                    <Box w={10} >
+                    <Image borderRadius={"50%"} src={kingImg} w={10}  h={10}/>
+                </Box>
+                                }
+
                                 bg="variant"
-                                fontSize={25}
+                                fontSize={35}
                             />
 
                             <MenuList bgColor={"black"} color={"black"}>
@@ -57,8 +77,9 @@ function StudentNavbar() {
                             SignUp
                         </Link>}
                 </Box>
+               
+                 
             </Flex>
-
             {/* if screen size is small or medium */}
 
             {isToken &&
@@ -72,28 +93,36 @@ function StudentNavbar() {
                     >
                         <DrawerOverlay />
                         <DrawerContent>
-                            <DrawerHeader bg={"black"}>
-                                <Box bg="white" width="fit-content">
-                                    <Link to={"/"}>
-                                        <Image src='https://www.masaischool.com/img/navbar/logo.svg' />
-                                    </Link>
+                            <DrawerHeader bg={"black"} display={"flex"} justifyContent={"center"} alignItems={"center"} flexDir={"column"}>
+                                <Box w={"50%"}>
+                                    <Image borderRadius={"50%"} src={kingImg} />
+                                </Box>
+                                <Box>
+                                    <Text color={"white"}>{kingName}</Text>
                                 </Box>
                             </DrawerHeader>
                             <DrawerCloseButton color="white" />
-                            <DrawerBody bgColor={"#66b9bf"} color="white" fontWeight={600}>
+                            <DrawerBody bgColor={"#66b9bf"} color="white" fontWeight={600} >
+
+
                                 <Stack spacing={30}>
-                                        <Box color={"white"}>
-                                            <Link to={"/courses"}>
-                                                COURSES
-                                            </Link>
-                                        </Box>                                   
-                                        <Box color={"white"}>
-                                            <Link to={"/fees"}>
-                                                FEES & PAP
-                                            </Link>
-                                        </Box>
-                                      
-                                    <Box onClick={onClose}>
+                                    <Box >
+                                        <Link to={"/courses"}>
+                                            COURSES
+                                        </Link>
+                                    </Box>
+                                    <Box >
+                                        <Link to={"/fees"}>
+                                            FEES & PAP
+                                        </Link>
+                                    </Box>
+                                    {inUserList && <Box  >
+                                        <Link to={"/lms"}>
+                                            LMS
+                                        </Link>
+                                    </Box>}
+
+                                    <Box onClick={onClose} >
 
                                         {isToken ?
                                             <Text onClick={() => {
@@ -110,59 +139,7 @@ function StudentNavbar() {
                     </Drawer>
                 </>
             }
-            {/* IF TOKEN IS NOT THERE BUT TO SHOW THE OPTION IN IN SMALL AND MEDIUM SCREEN 
-            {!isToken && <>
-                <HamburgerIcon aria-label='Options' as={HamburgerIcon} fontSize={30} color="white" onClick={onOpen} ref={btnRef} display={["flex", "flex", "flex", "none"]} />
-                <Drawer
-                    isOpen={isOpen}
-                    placement='right'
-                    onClose={onClose}
-                    finalFocusRef={btnRef}
-                >
-                    <DrawerOverlay />
-                    <DrawerContent>
-                        <DrawerHeader bg={"black"}>
-                            <Box bg="white" width="fit-content">
-                                <Link to={"/"}>
-                                    <Image src='https://www.masaischool.com/img/navbar/logo.svg' />
-                                </Link>
-                            </Box>
-                        </DrawerHeader>
-                        <DrawerCloseButton color="white" />
-                        <DrawerBody bgColor={"#66b9bf"} color="white" fontWeight={600}>
-                            <Stack spacing={30}>
 
-                                <Box color={"white"} onClick={onClose}>
-                                    <Link to={"/courses"}>
-                                        COURSES
-                                    </Link>
-                                </Box>
-
-
-                                <Box color={"white"} onClick={onClose}>
-                                    <Link to={"/fees"}>
-                                        FEES & PAP
-                                    </Link>
-                                </Box>
-
-
-                                <Box onClick={onClose}>
-
-                                    {isToken ?
-                                        <Text onClick={() => {
-                                            localStorage.removeItem("token")
-                                            navigate("/")
-                                        }}> LOGOUT</Text>
-                                        : <Link to={"/"}>
-                                            SIGNUP
-                                        </Link>}
-                                </Box>
-                            </Stack>
-                        </DrawerBody>
-                    </DrawerContent>
-                </Drawer>
-            </>
-            } */}
         </Flex>
 
     )

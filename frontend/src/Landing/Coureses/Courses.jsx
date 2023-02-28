@@ -4,6 +4,8 @@ import { HiOutlineCurrencyRupee } from "react-icons/hi"
 import React, { useEffect, useState } from 'react'
 import Footer from '../../Components/Footer/Footer'
 import StudentNavbar from '../NavStudent/StudentNavbar'
+import ControlledCarousel from '../../Components/Carousel/Carousel'
+import { useNavigate } from 'react-router-dom'
 
 function Courses() {
     let toast = useToast()
@@ -12,6 +14,8 @@ function Courses() {
 
     let [isLoading, setLoading] = useState(false)
     let [isIndex, setIndex] = useState(-1)
+    let isToken=localStorage.getItem("token")
+    let navigate=useNavigate()
     let arr = [
         {
             url: 'https://masai-website-images.s3.ap-south-1.amazonaws.com/opt1_b53f83aefc.webp',
@@ -62,12 +66,13 @@ function Courses() {
             }
 
         }).then((res) => res.json()).then((res) => {
-            console.log(res)
+            console.log(res.msg)
+            console.log("Application submited successfully" )
             getApplication()
             setLoading(false)
             toast({
                 description: res.msg,
-                status: res.msg == "Application submited successfully" ? "success" : "warning",
+                status: res.msg.includes("successfully")? "success" : "warning",
                 isClosable: true,
                 duration: 9000,
                 position: "top"
@@ -129,14 +134,19 @@ function Courses() {
                 }
             }).catch((e) => console.log(e))
     }
-    console.log(isPresent)
+    
     useEffect(() => {
+        
+        if(!isToken){
+           navigate("/")
+        }
         getApplication()
         getStudentList()
     })
     return (
         <>
-            < StudentNavbar />
+            < StudentNavbar inUserList={inUserList} />
+            
 
             <Box m={"auto"} >
                 <Box p={10} >
@@ -152,14 +162,14 @@ function Courses() {
                     <Grid w={"fit-content"} m={"auto"} templateColumns={{ base: "repeat(1,1fr)", sm: 'repeat(1,1fr)', md: 'repeat(1,1fr)', lg: 'repeat(2,1fr)', xl: 'repeat(3,1fr)' }} gap={{ base: 2, sm: 3, md: 4, lg: 5, xl: 6 }} >
                         {arr.map((el, index) => (
 
-                            <Box key={index} >
+                            <Box key={index}  >
                                 {/* --------- */}
                                 <Box width={"100%"}>
                                     <Image width={"100%"} src={el.url} />
                                 </Box>
                                 {/* --------- */}
 
-                                <Box w={"100%"} display={"flex"} flexDir={"column"} borderBottomRadius={20} gap={2} p={3} justifyContent={"left"} boxShadow={"md"} bgColor={"white"} >
+                                <Box  w={"100%"} display={"flex"} flexDir={"column"} borderBottomRadius={20} gap={2} p={3} justifyContent={"left"} boxShadow={"md"} bgColor={"white"} >
 
                                     <Box display={"flex"} flexDir={"column"} gap={2} w={"fit-content"} >
                                         <Badge color={"#6E71CC"} width={"fit-content"} pl={2} pr={2} borderRadius={15} fontSize={{ base: 8, sm: 12, md: 12, lg: 13, xl: 13 }}>{el.elg}</Badge>
