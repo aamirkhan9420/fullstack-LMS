@@ -174,7 +174,7 @@ function Courses() {
                                     <Box display={"flex"} flexDir={"column"} gap={2} w={"fit-content"} >
                                         <Badge color={"#6E71CC"} width={"fit-content"} pl={2} pr={2} borderRadius={15} fontSize={{ base: 8, sm: 12, md: 12, lg: 13, xl: 13 }}>{el.elg}</Badge>
                                         <Badge bgColor={"#F6EDE7"} width={"fit-content"} color={"#cc926e"} pl={2} pr={2} borderRadius={15} fontSize={{ base: 8, sm: 12, md: 12, lg: 13, xl: 13 }}>{el.type}</Badge>
-                                        <Badge pl={2} pr={2} borderRadius={15} fontSize={{ base: 8, sm: 12, md: 12, lg: 13, xl: 13 }} color={"#1A9FBD"}>{el.req}</Badge>
+                                        <Badge  pl={2} pr={2} borderRadius={15} fontSize={{ base: 8, sm: 12, md: 12, lg: 13, xl: 13 }} color={"#1A9FBD"}>{el.req}</Badge>
                                     </Box>
 
                                     {/* --------- */}

@@ -8,6 +8,8 @@ import Edit from '../Edit/Edit'
 
 import Home from '../Home/Home'
 import Lecture from '../Lecture/Lecture'
+import LmsAssignment from '../LMS/LmsAssignment'
+import LmsLecture from '../LMS/LmsLecture'
 import Student from '../Student/Student'
 import Login from '../UserLoginSignup/Login'
 import Signup from '../UserLoginSignup/Signup'
@@ -25,6 +27,9 @@ function AllRoutes() {
         <Route path='/edit' element={<Edit />}/>
         <Route path='/courses' element={<Courses/>}/>
         <Route path='/fees' element={<FeessandPap/>}/>
+        <Route path='/lmslecture' element={<LmsLecture/>}/>
+        <Route path='/lmsassignment' element={<LmsAssignment/>}/>
+
 
 
 
