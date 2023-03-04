@@ -12,6 +12,8 @@ function Lecture() {
   let [lecture_time, setLecture_time] = useState("")
   let [teacher_name, setTeacher_name] = useState("")
   let [lecture_id, setlecture_id] = useState("")
+  let [course,setCourse]=useState("")
+
   let [lecture_type, setlecture_type] = useState(false)
   let [temp,setTemp]=useState("")
   let [editId,setEditId]=useState("")
@@ -63,6 +65,7 @@ function Lecture() {
         lecture_time,
         teacher_name,
         lecture_id,
+        course,
         lecture_type: lecture_type.toString().toUpperCase()
 
       }
@@ -135,6 +138,7 @@ function Lecture() {
     setTeacher_name(e.teacher_name)
     setlecture_id(e.lecture_id)
     setlecture_type(e.lecture_type)
+    setCourse(e.course)
     setTemp(true)
     setEditId(e._id)
      onOpen()
@@ -149,8 +153,8 @@ function Lecture() {
   return (
     <>
      <Navbar />
-    <Box p={{ sm: 30, md: 30 }} >
-      <Button bg={"green"} color={"white"} onClick={onOpen}>Add Lecture</Button>
+    <Box m={"auto"} p={{ sm: 30, md: 30 }} >
+      <Button mb={6} mt={6}  bg={"green"} color={"white"} onClick={onOpen}>Add Lecture</Button>
 <Suspense fallback={<Box m={"auto"} mt={"40vh"}><Spinner /></Box>}>
 
       <GridComp prop={lecture} handleDelete={handleDelete}  handleModal={handleModal}/>
@@ -188,6 +192,15 @@ function Lecture() {
               <FormControl>
                 <FormLabel>Lecture Id</FormLabel>
                 <Input value={lecture_id} onChange={(e) => setlecture_id(e.target.value)} ref={initialRef} placeholder=' Lecture Id' />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Course </FormLabel>
+                <Select value={course} onChange={(e) => setCourse(e.target.value)} ref={initialRef}>
+                  <option value="">Select Course</option>
+                  <option value="Web Development">Web Development</option>
+                  <option value="Data Analytics">Data Analytics</option>
+                  <option value="Backend Development">Backend Development</option>
+                </Select>
               </FormControl>
               <FormControl>
                 <FormLabel>Lecture Type </FormLabel>

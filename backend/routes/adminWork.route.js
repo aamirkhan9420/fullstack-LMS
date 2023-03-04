@@ -11,15 +11,15 @@ const adminWork = express.Router()
 // --------create student -----//
 
 adminWork.post("/createStudent", async (req, res) => {
-    let { name, email, student_id, image, userId, state, course, coursetime ,index} = req.body
-
+    let { name, email, student_id, image, userId, state, course, coursetime ,student_userId,index} = req.body
+  
     //----check if student with this student id is already exist or not----//
     let isUserIdPresent = await UserListModel.findOne({ student_id: student_id })
     if (isUserIdPresent) {
         res.send({ "msg": ` student with student id ${student_id} already exist` })
     } else {
         try {
-            let newUser = new UserListModel({ name, email, student_id, image, userId, state, course, coursetime ,index})
+            let newUser = new UserListModel({ name, email, student_id, image, userId, state, course, coursetime,student_userId,index})
             await newUser.save()
             res.send({ "msg": "new student added" })
         } catch (error) {
@@ -47,7 +47,7 @@ adminWork.delete("/blockStudent/:id", async (req, res) => {
     try {
 
         let student = await UserListModel.findByIdAndDelete({ _id: id })
-        let newBlockStudent = new BlockListModel({ name: student.name, email: student.email, student_id: student.student_id, image: student.image, userId: student.userId, state: student.state, course: student.course, coursetime: student.coursetime ,index:student.index})
+        let newBlockStudent = new BlockListModel({ name: student.name, email: student.email, student_id: student.student_id, image: student.image, userId: student.userId, state: student.state, course: student.course, coursetime: student.coursetime,student_userId:student.student_userId ,index:student.index})
         await newBlockStudent.save()
         res.send({ "msg": `${student.student_id} id's student blocked successfully` })
 
@@ -63,7 +63,7 @@ adminWork.delete("/removeBlockStudent/:id", async (req, res) => {
         let blockStudent = await BlockListModel.findOne({ _id: id })
 
         await BlockListModel.findByIdAndDelete({ _id: id })
-        let newList = new UserListModel({ name: blockStudent.name, email: blockStudent.email, student_id: blockStudent.student_id, image: blockStudent.image, userId: blockStudent.userId, state: blockStudent.state, course: blockStudent.course, coursetime: blockStudent.coursetime,index:blockStudent.index })
+        let newList = new UserListModel({ name: blockStudent.name, email: blockStudent.email, student_id: blockStudent.student_id, image: blockStudent.image, userId: blockStudent.userId, state: blockStudent.state, course: blockStudent.course, coursetime: blockStudent.coursetime,index:blockStudent.index,student_userId:blockStudent.student_userId  })
         await newList.save()
         res.send({ "msg": `${blockStudent.student_id} id's student removed from blocked list successfully` })
 
@@ -124,7 +124,7 @@ adminWork.patch("/editStudent/:id", async (req, res) => {
 //------------create lecture------------//
 
 adminWork.post("/createLecture", async (req, res) => {
-    let { topic_name, lecture_date, lecture_time, teacher_name, lecture_id, lecture_type, userId } = req.body
+    let { topic_name, lecture_date, lecture_time, teacher_name, lecture_id, lecture_type, course,userId } = req.body
 
     //----check if lecture with this lecture id is already exist or not----//
     let isLectureIdPresent = await LectureModel.findOne({ lecture_id: lecture_id })
@@ -132,7 +132,7 @@ adminWork.post("/createLecture", async (req, res) => {
         res.send({ "msg": ` lecture with lecture id ${lecture_id} already exist` })
     } else {
         try {
-            let newLecture = new LectureModel({ topic_name, lecture_date, lecture_time, teacher_name, lecture_id, lecture_type, userId })
+            let newLecture = new LectureModel({ topic_name, lecture_date, lecture_time, teacher_name, lecture_id, lecture_type, course,userId })
             await newLecture.save()
             res.send({ "msg": "new lecture added" })
         } catch (error) {
@@ -198,7 +198,7 @@ adminWork.patch("/editlecture/:id", async (req, res) => {
 //------------create assignment------------//
 
 adminWork.post("/createassignment", async (req, res) => {
-    let { topic_name, assignment_date, assignment_time, teacher_name, assignment_id, assignment_type, userId } = req.body
+    let { topic_name, assignment_date, assignment_time, teacher_name, assignment_id, assignment_type, course,userId } = req.body
 
     //----check if assignment with this assignment id is already exist or not----//
     let isassignmentIdPresent = await AssignmentsModel.findOne({ assignment_id: assignment_id })
@@ -206,7 +206,7 @@ adminWork.post("/createassignment", async (req, res) => {
         res.send({ "msg": ` assignment with assignment id ${assignment_id} already exist` })
     } else {
         try {
-            let newassignment = new AssignmentsModel({ topic_name, assignment_date, assignment_time, teacher_name, assignment_id, assignment_type, userId })
+            let newassignment = new AssignmentsModel({ topic_name, assignment_date, assignment_time, teacher_name, assignment_id, assignment_type, course,userId })
             await newassignment.save()
             res.send({ "msg": "new assignment added" })
         } catch (error) {

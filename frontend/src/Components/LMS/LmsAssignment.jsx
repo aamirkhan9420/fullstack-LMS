@@ -7,7 +7,7 @@ function LmsAssignment() {
   let [assignment, setAssignment] = useState([])
 
     let getAssignment = () => {
-        fetch("https://lms-iliv.onrender.com/adminwork/getassignment", {
+        fetch("https://lms-iliv.onrender.com/studentWork/assignment", {
           method: "GET",
           headers: {
             'content-type': 'application/json',

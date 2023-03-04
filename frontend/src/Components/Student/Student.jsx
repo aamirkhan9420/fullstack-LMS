@@ -23,6 +23,8 @@ function Student() {
   let [course, setCourse] = useState("")
   let [coursetime, setCoursetime] = useState("")
   let [index, setIndex] = useState("")
+  let [student_userId, setStudent_userId] = useState("")
+
 
 
 
@@ -105,6 +107,7 @@ console.log(res)
         state: state,
         course: course,
         coursetime: coursetime,
+        student_userId:student_userId,
         index:index
 
       }
@@ -181,7 +184,7 @@ console.log(res)
     setCourse(el.course)
     setCoursetime(el.coursetime)
     setIndex(Number(el.index))
-
+    setStudent_userId(el.userId)
     removeFromApplicationList(el._id)
   }
   useEffect(() => {
@@ -268,6 +271,10 @@ console.log(res)
               <FormControl>
                 <FormLabel>Index</FormLabel>
                 <Input value={index} onChange={(e) => setIndex(e.target.value)} ref={initialRef} placeholder=' Student Index ' />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Student_userId</FormLabel>
+                <Input value={student_userId} onChange={(e) => setStudent_userId(e.target.value)} ref={initialRef} placeholder=' Student UserId ' />
               </FormControl>
               <FormControl>
                 <FormLabel>Image</FormLabel>

@@ -8,7 +8,7 @@ function LmsLecture() {
     let [lecture, setLecture] = useState([])
 
     let fetchLectures = () => {
-        fetch("https://lms-iliv.onrender.com/adminwork/getLectures", {
+        fetch("https://lms-iliv.onrender.com/studentWork/lectures", {
             method: "GET",
             headers: {
                 'content-type': 'application/json',

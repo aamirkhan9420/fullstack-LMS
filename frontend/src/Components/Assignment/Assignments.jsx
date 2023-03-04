@@ -11,6 +11,7 @@ function Assignments() {
   let [assignment_time, setAssignment_time] = useState("")
   let [teacher_name, setTeacher_name] = useState("")
   let [assignment_id, setAssignment_id] = useState("")
+  let [course,setCourse]=useState("")
   let [assignment_type, setAssignment_type] = useState(false)
   let [temp, setTemp] = useState("")
   let [editId, setEditId] = useState("")
@@ -65,6 +66,7 @@ function Assignments() {
         assignment_time,
         teacher_name,
         assignment_id,
+        course,
         assignment_type: assignment_type.toString().toUpperCase()
 
       }
@@ -137,6 +139,7 @@ function Assignments() {
     setTeacher_name(e.teacher_name)
     setAssignment_id(e.assignment_id)
     setAssignment_type(e.assignment_type)
+    setCourse(e.course)
     setTemp(true)
     setEditId(e._id)
     onOpen()
@@ -152,9 +155,9 @@ function Assignments() {
   return (
     <>
      <Navbar />
-    <Box p={{ sm: 30, md: 30 }}>
+    <Box m={"auto"} p={{ sm: 30, md: 30 }}>
      
-      <Button bg={"green"} color={"white"} onClick={onOpen}>Add Assignment</Button>
+      <Button mb={6} mt={6}  bg={"green"} color={"white"} onClick={onOpen}>Add Assignment</Button>
 
       <Suspense fallback={<Box m={"auto"} mt={"40vh"}><Spinner /></Box>}>
 
@@ -195,6 +198,16 @@ function Assignments() {
                 <FormLabel>Assignment Id</FormLabel>
                 <Input value={assignment_id} onChange={(e) => setAssignment_id(e.target.value)} ref={initialRef} placeholder=' Assignment Id' />
               </FormControl>
+              <FormControl>
+                <FormLabel>Course </FormLabel>
+                <Select value={course} onChange={(e) => setCourse(e.target.value)} ref={initialRef}>
+                  <option value="">Select Course</option>
+                  <option value="Web Development">Web Development</option>
+                  <option value="Data Analytics">Data Analytics</option>
+                  <option value="Backend Development">Backend Development</option>
+                </Select>
+              </FormControl>
+             
               <FormControl>
                 <FormLabel>Assignment Type </FormLabel>
                 <Select value={assignment_type} onChange={(e) => setAssignment_type(e.target.value)} ref={initialRef}>

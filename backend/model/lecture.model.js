@@ -7,6 +7,7 @@ const lectureschema=mongoose.Schema({
     teacher_name:String,
     lecture_id:String,
     lecture_type:String,
+    course:String,
     userId:String
 
 })
