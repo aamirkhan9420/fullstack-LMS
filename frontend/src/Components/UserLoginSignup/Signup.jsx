@@ -65,7 +65,7 @@ function Signup() {
 "Tripura","Uttarakhand","Uttar Pradesh","West Bengal"]
   return (
 <>
-<Navbar />
+
 
     <Box bgColor={"#66b9bf"} color={"white"} shadow={"lg"} w="fit-content" p={"3%"} m="auto" mt={"15vh"} borderRadius={10} display={"flex"} flexDir="column" alignItems="center" justifyContent={"center"} gap={5}>
          <Text fontWeight={600} fontSize={25}>SignUp </Text> 

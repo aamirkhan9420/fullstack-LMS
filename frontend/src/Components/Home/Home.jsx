@@ -7,7 +7,7 @@ function Home() {
 
   return (
     <>
-     <Navbar />
+
     <Box bgColor={"#66b9bf"} shadow={"lg"} w="fit-content" p={"5%"} m="auto" mt={"25vh"} display={"flex"} alignItems="center" justifyContent={"space-between"} gap={2} borderRadius={10}>
      
       <Box>

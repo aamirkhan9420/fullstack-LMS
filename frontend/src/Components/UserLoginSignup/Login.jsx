@@ -59,7 +59,7 @@ function Login() {
   }
   return (
 <>
-<Navbar />
+
 
     <Box   bgColor={"#66b9bf"} color={"white"} shadow={"lg"} w="fit-content" p={"3%"} m="auto" mt={"25vh"} borderRadius={10} display={"flex"} flexDir="column" alignItems="center" justifyContent={"center"} gap={5}>
       <Text fontWeight={600} fontSize={25}>Login</Text>
