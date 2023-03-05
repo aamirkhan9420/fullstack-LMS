@@ -4,7 +4,6 @@ import { HiOutlineCurrencyRupee } from "react-icons/hi"
 import React, { useEffect, useState } from 'react'
 import Footer from '../../Components/Footer/Footer'
 import StudentNavbar from '../NavStudent/StudentNavbar'
-import ControlledCarousel from '../../Components/Carousel/Carousel'
 import { useNavigate } from 'react-router-dom'
 
 function Courses() {

@@ -3,6 +3,7 @@ import React, { useRef } from 'react'
 import { Link, Navigate, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { VscAccount } from "react-icons/vsc";
 import { HamburgerIcon } from "@chakra-ui/icons"
+import { NavLink } from 'react-router-dom';
 
 function Navbar() {
    let isToken = localStorage.getItem("token")
@@ -15,35 +16,34 @@ function Navbar() {
    const btnRef = useRef()
    return (
 
-      <Flex zIndex={700} w={"100%"} boxShadow="sm" height={"80px"} alignItems={"center"} justifyContent="space-evenly" bgColor={"#66b9bf"} position="sticky" top={0}  >
+      <Flex zIndex={700} w={"100%"} boxShadow="sm" height={"80px"} alignItems={"center"} justifyContent="space-evenly" bgColor={"black"} position="sticky" top={0}  >
          <Box textAlign={"center"}>
             <Link to={"/"}>
-               <Image src='https://www.masaischool.com/img/navbar/logo.svg' />
+               <Image src='https://masaischool.com/img/footer/masai-logo.svg' />
             </Link>
          </Box>
          <Flex display={["none", "none", "none", "flex"]} align={"center"} justifyContent="space-evenly" width={"70%"} fontSize={['10px', '14px', '16px', '16px']} color="teal.900" fontWeight={600}>
             {isToken && user==="admin"&&<Box color={"white"}>
-               <Link to={"/addassignment"}>
+               <NavLink to={"/addassignment"}>
                   Assignments
-               </Link>
+               </NavLink>
             </Box> 
             }
             {isToken&&user==="admin"&&<Box color={"white"}>
-               <Link to={"/addlecture"}>
+               <NavLink to={"/addlecture"}>
                   Lectures
-               </Link>
-            </Box> 
-               
+               </NavLink>
+            </Box>    
             }
             {isToken &&user=="admin"&&<Box color={"white"}>
-               <Link to={"/student"}>
+               <NavLink to={"/student"}>
                   Students
-               </Link>
+               </NavLink>
             </Box>}
             {isToken &&user=="admin"&&<Box color={"white"}>
-               <Link to={"/blockstudent"}>
+               <NavLink to={"/blockstudent"}>
                   BlockList
-               </Link>
+               </NavLink>
             </Box>}
            { isToken &&user=="admin"&& <Box color={"white"}>
                {isToken ?
@@ -64,9 +64,9 @@ function Navbar() {
 
                      </MenuList>
                   </Menu>
-                  : <Link to={"/signup"}>
+                  : <NavLink to={"/signup"}>
                      SignUp
-                  </Link>}
+                  </NavLink>}
 
 
             </Box>}
@@ -87,9 +87,9 @@ function Navbar() {
                   <DrawerOverlay />
                   <DrawerContent>
                      <DrawerHeader bg={"black"}>
-                        <Box bg="white" width="fit-content">
+                        <Box  width="fit-content">
                            <Link to={"/"}>
-                              <Image src='https://www.masaischool.com/img/navbar/logo.svg' />
+                              <Image src='https://masaischool.com/img/footer/masai-logo.svg' />
                            </Link>
                         </Box>
                      </DrawerHeader>
@@ -99,26 +99,26 @@ function Navbar() {
 
 
                            {isToken&& <Box onClick={onClose}>
-                              <Link to={"/addassignment"} >
+                              <NavLink to={"/addassignment"} >
                                  Assignments
-                              </Link>
+                              </NavLink>
                            </Box> 
                            }
                            {isToken&&<Box onClick={onClose}>
-                              <Link to={"/addlecture"}>
+                              <NavLink to={"/addlecture"}>
                                  Lectures
-                              </Link>
+                              </NavLink>
                            </Box> 
                            }
                            {isToken && <Box onClick={onClose}>
-                              <Link to={"/student"}>
+                              <NavLink to={"/student"}>
                                  Students
-                              </Link>
+                              </NavLink>
                            </Box>}
                            {isToken && <Box onClick={onClose}>
-                              <Link to={"/blockstudent"}>
+                              <NavLink to={"/blockstudent"}>
                                  BlockList
-                              </Link>
+                              </NavLink>
                            </Box>}
                            <Box onClick={onClose}>
 
@@ -127,9 +127,9 @@ function Navbar() {
                                     localStorage.removeItem("token")
                                     navigate("/")
                                  }}> LogOut</Text>
-                                 : <Link to={"/"}>
+                                 : <NavLink to={"/"}>
                                     SignUp
-                                 </Link>}
+                                 </NavLink>}
                            </Box>
                         </Stack>
                      </DrawerBody>

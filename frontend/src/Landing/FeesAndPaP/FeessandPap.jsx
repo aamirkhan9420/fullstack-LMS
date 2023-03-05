@@ -6,7 +6,7 @@ import { BsLightningCharge } from "react-icons/bs"
 
 
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Footer from '../../Components/Footer/Footer'
 import StudentNavbar from '../NavStudent/StudentNavbar'
 import { useNavigate } from 'react-router-dom'
@@ -14,14 +14,41 @@ import { useNavigate } from 'react-router-dom'
 function FeessandPap() {
   let isToken=localStorage.getItem("token")
   let navigate=useNavigate()
+  let [inUserList, setInUserList] = useState(false)
+  let user = JSON.parse(localStorage.getItem("currentUser"))
+ 
+  let getStudentList = () => {
+    fetch("https://lms-iliv.onrender.com/adminwork/getStudentsList", {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+    }).then((res) => res.json())
+        .then((res) => {
+
+            for (let i = 0; i < res.msg.length; i++) {
+
+                if (res.msg[i].email === user.email) {
+
+                    setInUserList(true)
+                    return 
+
+                } else {
+                    setInUserList(false)
+                     }
+            }
+        }).catch((e) => console.log(e))
+}
+
   useEffect(()=>{
+    getStudentList()
     if(!isToken){
       navigate("/")
    }
   })
   return (
     <>
-    <StudentNavbar />
+    <StudentNavbar inUserList={inUserList}/>
    
     <Box margin={"auto"} display={"flex"} flexDir={"column"} gap={20}>
       {/*--------------- Top heading and description-----------------------*/}

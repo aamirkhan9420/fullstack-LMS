@@ -1,16 +1,29 @@
-import { Box, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Icon, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Stack, Text, useDisclosure } from '@chakra-ui/react'
+import { Box, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Flex, Icon, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Stack, Switch, Text, useDisclosure } from '@chakra-ui/react'
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, Navigate, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { VscAccount } from "react-icons/vsc";
 import { HamburgerIcon } from "@chakra-ui/icons"
 import StateKing from '../../Components/StateKing/StateKing';
+import { NavLink } from 'react-router-dom';
 
 function LmsNavbar({ inUserList }) {
     let isToken = localStorage.getItem("token")
     let navigate = useNavigate()
     let [kingImg, setKingImg] = useState("")
     let [kingName, setKingName] = useState("")
+    let x = JSON.parse(localStorage.getItem("switch"))
+    let y = JSON.parse(localStorage.getItem("check"))
 
+    let [show, setShow] = useState(x)
+    let [checked, setChecked] = useState(y)
+    let handleSwitch = () => {
+
+        setShow(!show)
+        localStorage.setItem("switch", JSON.stringify(!show))
+        setChecked(!checked)
+        localStorage.setItem("check", JSON.stringify(!checked))
+
+    }
     //=========for drawer=========//
     const { isOpen, onOpen, onClose } = useDisclosure()
     const btnRef = useRef()
@@ -22,30 +35,26 @@ function LmsNavbar({ inUserList }) {
     })
     return (
 
-        <Flex zIndex={700} w={"100%"} boxShadow="sm" height={"80px"} align={"center"} justifyContent="space-evenly" bgColor={"#66b9bf"} position="sticky" top={0}  >
+        <Flex zIndex={700} w={"100%"} boxShadow="sm" height={"80px"} align={"center"} justifyContent="space-evenly" bgColor={"black"} position="sticky" top={0}  >
             <Box >
                 <Link to={"/"}>
-                    <Image src='https://www.masaischool.com/img/navbar/logo.svg' />
+                    <Image src='https://masaischool.com/img/footer/masai-logo.svg' />
                 </Link>
             </Box>
             <Flex display={["none", "none", "none", "flex"]} align={"center"} justifyContent="space-evenly" width={"70%"} fontSize={['10px', '14px', '16px', '16px']} color="teal.900" fontWeight={600}>
                 <Box color={"white"}>
-                    <Link to={"/lmslecture"}>
+                    <NavLink to={"/lmslecture"}>
                         Lectures
-                    </Link>
+                    </NavLink>
                 </Box>
 
                 <Box color={"white"}>
-                    <Link to={"/lmsassignment"}>
+                    <NavLink to={"/lmsassignment"}>
                         Assignments
-                    </Link>
+                    </NavLink>
                 </Box>
 
-                {inUserList && <Box color={"white"}>
-                    <Link to={"/lms"}>
-                        LMS
-                    </Link>
-                </Box>}
+
 
                 <Box color={"white"}>
 
@@ -55,11 +64,13 @@ function LmsNavbar({ inUserList }) {
                                 as={IconButton}
                                 borderRadius={"50%"}
                                 icon={
-                                    <Box w={10} >
-                                        <Image borderRadius={"50%"} src={kingImg} w={10} h={10} />
+                                    <Box w={show ? "" : 10} >
+
+                                        {!show ? <Image borderRadius={"50%"} src={kingImg} w={10} h={10} />
+
+                                            : <VscAccount />}
                                     </Box>
                                 }
-
                                 bg="variant"
                                 fontSize={35}
                             />
@@ -73,9 +84,14 @@ function LmsNavbar({ inUserList }) {
 
                             </MenuList>
                         </Menu>
-                        : <Link to={"/signup"}>
+                        : <NavLink to={"/signup"}>
                             SignUp
-                        </Link>}
+                        </NavLink>}
+                </Box>
+
+                <Box>
+
+                    <Switch colorScheme='red' isChecked={checked} onChange={handleSwitch} />
                 </Box>
 
 
@@ -93,12 +109,16 @@ function LmsNavbar({ inUserList }) {
                     >
                         <DrawerOverlay />
                         <DrawerContent>
-                            <DrawerHeader bg={"black"} display={"flex"} justifyContent={"center"} alignItems={"center"} flexDir={"column"}>
-                                <Box w={"50%"}>
-                                    <Image borderRadius={"50%"} src={kingImg} />
+                            <DrawerHeader  bg={"black"} display={"flex"} justifyContent={"center"} alignItems={"center"} flexDir={"column"}>
+                            <Box w={"50%"}>
+                                    {!show ? <Image borderRadius={"50%"} src={kingImg} /> :
+                                        <Link to={"/"}>
+                                            <Image bgColor={"white"} src='https://www.masaischool.com/img/navbar/logo.svg' />
+                                        </Link>
+                                    }
                                 </Box>
                                 <Box>
-                                    <Text color={"white"}>{kingName}</Text>
+                                    {!show && <Text color={"white"}>{kingName}</Text>}
                                 </Box>
                             </DrawerHeader>
                             <DrawerCloseButton color="white" />
@@ -107,20 +127,16 @@ function LmsNavbar({ inUserList }) {
 
                                 <Stack spacing={30}>
                                     <Box >
-                                        <Link to={"/lmslecture"}>
+                                        <NavLink to={"/lmslecture"}>
                                             Assignments
-                                        </Link>
+                                        </NavLink>
                                     </Box>
                                     <Box >
-                                        <Link to={"/lmsassignment"}>
+                                        <NavLink to={"/lmsassignment"}>
                                             Lectures
-                                        </Link>
+                                        </NavLink>
                                     </Box>
-                                    {inUserList && <Box  >
-                                        <Link to={"/lms"}>
-                                            LMS
-                                        </Link>
-                                    </Box>}
+
 
                                     <Box onClick={onClose} >
 
@@ -129,10 +145,15 @@ function LmsNavbar({ inUserList }) {
                                                 localStorage.removeItem("token")
                                                 navigate("/")
                                             }}> LogOut</Text>
-                                            : <Link to={"/"}>
+                                            : <NavLink to={"/"}>
                                                 SignUp
-                                            </Link>}
+                                            </NavLink>}
                                     </Box>
+
+                                    <Box>
+                                        <Switch colorScheme='red' isChecked={checked} onChange={handleSwitch} />
+                                    </Box>
+
                                 </Stack>
                             </DrawerBody>
                         </DrawerContent>

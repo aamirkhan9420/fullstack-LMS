@@ -31,3 +31,11 @@ body ::-webkit-scrollbar-thumb {
 ::-webkit-scrollbar-track {
   background: hsla(0, 0%, 100%, 0.1);
 }
+
+.active{
+  color: red;
+  font-weight:700 ;
+  font-size: 18px;
+  text-decoration-line: underline;
+  
+}
