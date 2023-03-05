@@ -7,6 +7,9 @@ import { NavLink } from 'react-router-dom';
 
 function Navbar() {
    let isToken = localStorage.getItem("token")
+   let currentUser = JSON.parse(localStorage.getItem("currentUser"))
+
+
    let user=localStorage.getItem("user")
    let navigate = useNavigate()
    let { pathname } = useLocation()
@@ -23,29 +26,29 @@ function Navbar() {
             </Link>
          </Box>
          <Flex display={["none", "none", "none", "flex"]} align={"center"} justifyContent="space-evenly" width={"70%"} fontSize={['10px', '14px', '16px', '16px']} color="teal.900" fontWeight={600}>
-            {isToken && user==="admin"&&<Box color={"white"}>
+            {isToken && currentUser.person==="admin"&&<Box color={"white"}>
                <NavLink to={"/addassignment"}>
                   Assignments
                </NavLink>
             </Box> 
             }
-            {isToken&&user==="admin"&&<Box color={"white"}>
+            {isToken&&currentUser.person==="admin"&&<Box color={"white"}>
                <NavLink to={"/addlecture"}>
                   Lectures
                </NavLink>
             </Box>    
             }
-            {isToken &&user=="admin"&&<Box color={"white"}>
+            {isToken &&currentUser.person==="admin"&&<Box color={"white"}>
                <NavLink to={"/student"}>
                   Students
                </NavLink>
             </Box>}
-            {isToken &&user=="admin"&&<Box color={"white"}>
+            {isToken &&currentUser.person==="admin"&&<Box color={"white"}>
                <NavLink to={"/blockstudent"}>
                   BlockList
                </NavLink>
             </Box>}
-           { isToken &&user=="admin"&& <Box color={"white"}>
+           { isToken &&currentUser.person==="admin"&& <Box color={"white"}>
                {isToken ?
                   <Menu >
                      <MenuButton
@@ -75,7 +78,7 @@ function Navbar() {
       
 
          {/* if screen size is small or medium */}
-         {isToken &&user=="admin"&&
+         {isToken &&currentUser.person==="admin"&&
             <>
                <HamburgerIcon aria-label='Options' as={HamburgerIcon} fontSize={30} color="white" onClick={onOpen} ref={btnRef} display={["flex", "flex", "flex", "none"]} />
                <Drawer

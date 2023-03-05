@@ -20,6 +20,7 @@ function Lecture() {
   
   let isToken = localStorage.getItem("token")
   let currentUser = JSON.parse(localStorage.getItem("currentUser"))
+
   let user=localStorage.getItem("user")
   let navigate = useNavigate()
 
@@ -144,8 +145,10 @@ function Lecture() {
      onOpen()
    
   }
+  
+
   useEffect(() => {
-    if (!isToken||user==="student") {
+    if (!isToken||currentUser.person==="student") {
       navigate("/")
     }
     getLectures()

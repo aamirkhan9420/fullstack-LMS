@@ -47,8 +47,10 @@ function BlockStudent() {
                 setCount(count + 1)
             }).catch((e) => console.log(e))
     }
+   
+
     useEffect(() => {
-        if (!isToken || user === "student") {
+        if (!isToken || currentUser.person === "student") {
             navigate("/")
         }
         getBlockStudentList()

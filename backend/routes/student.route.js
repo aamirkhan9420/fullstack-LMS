@@ -19,7 +19,7 @@ studentRouter.post("/signup", async (req, res) => {
             
             bcrypt.hash(password, 5, async (err, hashpasword) => {
                 if (hashpasword) {
-                    let newstudent = new StudentModel({ name: name, email: email, password: hashpasword ,state})
+                    let newstudent = new StudentModel({ name: name, email: email, password: hashpasword ,state,person:"student"})
                     await newstudent.save()
                     res.send({ "msg": "signup successful" })
                 } else {
@@ -54,7 +54,7 @@ studentRouter.post("/login", async (req, res) => {
                     if (result) {
                         jwt.sign({ userId: user[0]._id }, process.env.KEY, (er, token) => {
                             if (token) {
-                                res.send({ "msg": "login successful", "token": token, "name": name, "email": email,userId:user[0]._id ,"state":state})
+                                res.send({ "msg": "login successful", "token": token, "name": name, "email": email,userId:user[0]._id ,"state":state ,"person":user[0].person})
                             } else {
                                 res.send({ "msg": "login failed! please signup first"})
                             }

@@ -187,8 +187,9 @@ console.log(res)
     setStudent_userId(el.userId)
     removeFromApplicationList(el._id)
   }
+  
   useEffect(() => {
-    if (!isToken||user==="student") {
+    if (!isToken||currentUser.person==="student") {
       navigate("/")
     }
     getStudentList()

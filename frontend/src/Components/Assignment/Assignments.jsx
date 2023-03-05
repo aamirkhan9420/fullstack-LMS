@@ -145,9 +145,11 @@ function Assignments() {
     onOpen()
 
   }
+  let currentUser = JSON.parse(localStorage.getItem("currentUser"))
+
 
   useEffect(() => {
-    if(!isToken||user==="student"){
+    if(!isToken||currentUser.person==="student"){
     navigate("/")
     }
     getAssignment()
