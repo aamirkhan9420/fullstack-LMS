@@ -255,7 +255,7 @@ console.log(res)
               </FormControl>
               <FormControl>
                 <FormLabel>Student-ID</FormLabel>
-                <Input value={studentId} onChange={(e) => setStudentId(e.target.value)} ref={initialRef} placeholder='Student-ID' />
+                <Input value={studentId} onChange={(e) => setStudentId(e.target.value)} ref={initialRef} placeholder='Eg: fw18_1184' />
               </FormControl>
               <FormControl>
                 <FormLabel>Course</FormLabel>

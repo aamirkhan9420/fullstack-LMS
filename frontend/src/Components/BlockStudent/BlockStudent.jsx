@@ -67,7 +67,7 @@ function BlockStudent() {
                             <Box h={"50%"} m="auto" w={"100%"}>
                                 <Image borderRadius={10} h={"100%"} w={"100%"} src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlXCTlMvfcUMsJ4r4seTYMY8_k8V31eV3LKUxkdR34n0BurNYuarum86BROpRlbhoQlxU&usqp=CAU' />
                             </Box>
-                            <Box display={"flex"} h={"30%"} flexDir="column" justifyContent={"space-between"} >
+                            <Box display={"flex"} h={"30%"} flexDir="column" justifyContent={"space-between"}  color={"whiteAlpha.900"} fontWeight={500}>
                                 <Text>{`name: ${el.name}`}</Text>
                                 <Text>{`Student-ID: ${el.student_id}`}</Text>
                                 <Text>{`Email-ID: ${el.email}`}</Text>
