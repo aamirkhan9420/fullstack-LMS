@@ -17,12 +17,15 @@ Masai-LMS is a platform where you can signup as a student or admin if you signup
 
 <a href="https://frontend-ecru.vercel.app/">Live deployed link</a>
 <h1>Admin and Student option</h1>
+
 ![Screenshot (2314)](https://user-images.githubusercontent.com/101388992/224731931-0980efcd-db26-4f3b-be78-5441f2457b77.png)
 
 <h1>Signup page</h1>
+
 ![Screenshot (2315)](https://user-images.githubusercontent.com/101388992/224732419-e2423802-732e-4ce0-8cbb-ce64f96be52c.png)
 
 <h1>Login page</h1>
+
 ![Screenshot (2316)](https://user-images.githubusercontent.com/101388992/224732607-cfbdbd4b-0806-46d7-99b8-a3c6846e19e0.png)
 
 
