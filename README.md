@@ -81,15 +81,30 @@ Masai-LMS is a platform where you can signup as a student or admin if you signup
 
 ![Screenshot (2330)](https://user-images.githubusercontent.com/101388992/224738022-8b88f09b-6f80-402c-989d-b3934ea2f3ea.png)
 
+<h1>Lecture page</h1>
+
+![Screenshot (2331)](https://user-images.githubusercontent.com/101388992/224739344-dd9d2dbc-2cf5-4b7c-be38-6cbd305ce657.png)
+
+<h1> Add new Lecture </h1>
+
+![Screenshot (2332)](https://user-images.githubusercontent.com/101388992/224739530-0d47a5db-317c-40f3-a8fa-4c097c300fcf.png)
+
+<h1> Edit Lecture </h1>
+
+![Screenshot (2333)](https://user-images.githubusercontent.com/101388992/224739698-513cfdb0-9499-4c30-b056-26d74136b752.png)
+
+<h1> Student page </h1>
+
+![Screenshot (2334)](https://user-images.githubusercontent.com/101388992/224740476-9de43041-1948-4744-bb51-5faa286802ef.png)
+
+<h1> New Student Application </h1>
+
+![Screenshot (2340)](https://user-images.githubusercontent.com/101388992/224740651-5d879358-0f32-4557-a52c-d838c7bbc4f2.png)
 
 
+<h1> Edit Student data </h1>
 
-
-
-
-
-
-
+![Screenshot (2341)](https://user-images.githubusercontent.com/101388992/224740715-6da8d61e-5c98-4187-899a-1adf5bc894cb.png)
 
 
  <h1>Tech Stack</h1>
