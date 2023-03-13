@@ -73,6 +73,23 @@ Masai-LMS is a platform where you can signup as a student or admin if you signup
 
 ![Screenshot (2328)](https://user-images.githubusercontent.com/101388992/224736715-1ef7fe75-e597-4c58-9366-d0394cedb08c.png)
 
+<h1> Add new Assignment </h1>
+
+![Screenshot (2329)](https://user-images.githubusercontent.com/101388992/224737775-e387b9da-2477-489d-99c3-0d3cd5076117.png)
+
+<h1> Edit Assignment </h1>
+
+![Screenshot (2330)](https://user-images.githubusercontent.com/101388992/224738022-8b88f09b-6f80-402c-989d-b3934ea2f3ea.png)
+
+
+
+
+
+
+
+
+
+
 
 
  <h1>Tech Stack</h1>
