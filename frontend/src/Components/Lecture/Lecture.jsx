@@ -17,6 +17,7 @@ function Lecture() {
   let [lecture_type, setlecture_type] = useState(false)
   let [temp,setTemp]=useState("")
   let [editId,setEditId]=useState("")
+  let [modalheading,setModalheading]=useState("")
   
   let isToken = localStorage.getItem("token")
   let currentUser = JSON.parse(localStorage.getItem("currentUser"))
@@ -142,10 +143,15 @@ function Lecture() {
     setCourse(e.course)
     setTemp(true)
     setEditId(e._id)
+    setModalheading("Edit Lecture")
      onOpen()
    
   }
-  
+  let handleModalforNewLecture=()=>{
+    setModalheading("")
+    onOpen()
+  }
+
 
   useEffect(() => {
     if (!isToken||currentUser.person==="student") {
@@ -157,7 +163,7 @@ function Lecture() {
     <>
      <Navbar />
     <Box m={"auto"} p={{ sm: 30, md: 30 }} >
-      <Button mb={6} mt={6}  bg={"green"} color={"white"} onClick={onOpen}>Add Lecture</Button>
+      <Button mb={6} mt={6}  bg={"green"} color={"white"} onClick={handleModalforNewLecture}>Add Lecture</Button>
 <Suspense fallback={<Box m={"auto"} mt={"40vh"}><Spinner /></Box>}>
 
       <GridComp prop={lecture} handleDelete={handleDelete}  handleModal={handleModal}/>
@@ -173,7 +179,7 @@ function Lecture() {
         >
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Add New Lecture</ModalHeader>
+            <ModalHeader>{modalheading!=""?modalheading: "Add New Lecture"}</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
               <FormControl>

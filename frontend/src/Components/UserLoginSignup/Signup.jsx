@@ -110,7 +110,7 @@ function Signup() {
           loadingText='Submitting'>
           submit
         </Button>
-        <Text fontWeight={600} fontSize={20}>If have created account !</Text>
+        <Text fontWeight={600} fontSize={20}>Already have an account?</Text>
         <Text color={"blue"} fontWeight={600} fontSize={20}>
           <Link to={"/login"}>
             LogIn

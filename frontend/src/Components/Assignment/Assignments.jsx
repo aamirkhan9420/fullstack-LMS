@@ -15,6 +15,7 @@ function Assignments() {
   let [assignment_type, setAssignment_type] = useState(false)
   let [temp, setTemp] = useState("")
   let [editId, setEditId] = useState("")
+  let [modalheading,setModalheading]=useState("")
   let navigate=useNavigate()
   let isToken=localStorage.getItem("token")
   let user=localStorage.getItem("user")
@@ -142,8 +143,13 @@ function Assignments() {
     setCourse(e.course)
     setTemp(true)
     setEditId(e._id)
+    setModalheading("Edit Assignment")
     onOpen()
 
+  }
+  let handleModalforNewAssignment=()=>{
+    setModalheading("")
+    onOpen()
   }
   let currentUser = JSON.parse(localStorage.getItem("currentUser"))
 
@@ -159,7 +165,7 @@ function Assignments() {
      <Navbar />
     <Box m={"auto"} p={{ sm: 30, md: 30 }}>
      
-      <Button mb={6} mt={6}  bg={"green"} color={"white"} onClick={onOpen}>Add Assignment</Button>
+      <Button mb={6} mt={6}  bg={"green"} color={"white"} onClick={handleModalforNewAssignment}>Add Assignment</Button>
 
       <Suspense fallback={<Box m={"auto"} mt={"40vh"}><Spinner /></Box>}>
 
@@ -177,7 +183,7 @@ function Assignments() {
         >
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Add New Assignment</ModalHeader>
+            <ModalHeader>{modalheading!=""?modalheading: "Add New Assignment"}</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
               <FormControl>

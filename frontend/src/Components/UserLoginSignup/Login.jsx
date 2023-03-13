@@ -93,7 +93,7 @@ function Login() {
         <Button onClick={handleForm} bgColor={"green"} isLoading={isLoading ? true : false} loadingText="Submitting">
           submit
         </Button>
-        <Text fontWeight={600} fontSize={20}>If don't have account !</Text>
+        <Text fontWeight={600} fontSize={20}>Don't have an account?</Text>
         <Text color={"blue"} fontWeight={600} fontSize={20}>
           <Link to={"/signup"}>
             SignUp
