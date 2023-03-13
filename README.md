@@ -106,6 +106,26 @@ Masai-LMS is a platform where you can signup as a student or admin if you signup
 
 ![Screenshot (2341)](https://user-images.githubusercontent.com/101388992/224740715-6da8d61e-5c98-4187-899a-1adf5bc894cb.png)
 
+<h1> Blocked Student </h1>
+
+![Screenshot (2346)](https://user-images.githubusercontent.com/101388992/224741314-58367cb4-ae52-4149-a1e7-079d0d2b81bf.png)
+
+<h1> Blocked Student can not Login</h1>
+
+![Screenshot (2350)](https://user-images.githubusercontent.com/101388992/224741631-ea00ce22-3ed3-4612-996b-35449adf73d4.png)
+
+<h1>Student Application in progress</h1>
+
+![Screenshot (2337)](https://user-images.githubusercontent.com/101388992/224742323-933301d2-b222-43c2-a1af-e51b6e722a3a.png)
+
+<h1>Student Application in Accepted</h1>
+
+![Screenshot (2343)](https://user-images.githubusercontent.com/101388992/224742483-9548cbb5-9ed5-40f5-9d4e-239e252c0302.png)
+
+<h1>Student can not apply for multiple courses at a time</h1>
+
+![Screenshot (2344)](https://user-images.githubusercontent.com/101388992/224742785-431ccc59-48ca-4ecd-9799-b0c38f41c521.png)
+
 
  <h1>Tech Stack</h1>
  <h3>frontend</h3>
