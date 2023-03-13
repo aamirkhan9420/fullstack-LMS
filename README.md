@@ -32,27 +32,42 @@ Masai-LMS is a platform where you can signup as a student or admin if you signup
 <h1>Frontend</h1>
 <h1>Landing page</h1>
 
-
-
 ![Screenshot (2317)](https://user-images.githubusercontent.com/101388992/224732998-a0da568a-f26f-426c-a3bb-1a3e34da85e3.png)
 
+<h1>Course page</h1>
+
+![Screenshot (2318)](https://user-images.githubusercontent.com/101388992/224733645-5bb12bc3-b881-458d-9b9f-a545110337c6.png)
+
+<h1>Footer</h1>
 
 
 
+![Screenshot (2319)](https://user-images.githubusercontent.com/101388992/224733950-af320c72-b15a-4dd2-bfbd-b523d6228b33.png)
 
+<h1>Fees and pap page</h1>
 
+![Screenshot (2320)](https://user-images.githubusercontent.com/101388992/224734424-f83ad6c7-b923-44fe-96ad-2b2a904900ec.png)
 
+<h1>LMS lecture page</h1>
 
+![Screenshot (2322)](https://user-images.githubusercontent.com/101388992/224734600-d67aa1e2-1aa2-4eb0-835a-9dc1486940ca.png)
 
+<h1>LMS Assignment page</h1>
 
+![Screenshot (2323)](https://user-images.githubusercontent.com/101388992/224734737-a94aa1d7-5fd4-4f0f-9339-409d090e011e.png)
 
+<h1>Responsive and Student can see profile image of their state famous personality  </h1>
+![Screenshot (2326)](https://user-images.githubusercontent.com/101388992/224734913-e1a53eab-5390-4ad9-a603-6f68aa1120a8.png)
 
+<h1>Student can toggle profile image</h1>
+![Screenshot (2325)](https://user-images.githubusercontent.com/101388992/224736009-cf053e3e-8184-4d29-9950-27b20113d3e7.png)
 
+<h1>Responsive</h1>
+![Screenshot (2327)](https://user-images.githubusercontent.com/101388992/224736341-aa015517-ed2f-4b46-b611-1bdfc98665ed.png)
 
-
-
-
-
+<h1>Backend</h1>
+<h1>Assignment page</h1>
+![Screenshot (2328)](https://user-images.githubusercontent.com/101388992/224736715-1ef7fe75-e597-4c58-9366-d0394cedb08c.png)
 
 
 
