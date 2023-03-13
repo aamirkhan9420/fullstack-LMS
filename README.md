@@ -118,7 +118,7 @@ Masai-LMS is a platform where you can signup as a student or admin if you signup
 
 ![Screenshot (2337)](https://user-images.githubusercontent.com/101388992/224742323-933301d2-b222-43c2-a1af-e51b6e722a3a.png)
 
-<h1>Student Application in Accepted</h1>
+<h1>Student Application  Accepted</h1>
 
 ![Screenshot (2343)](https://user-images.githubusercontent.com/101388992/224742483-9548cbb5-9ed5-40f5-9d4e-239e252c0302.png)
 
