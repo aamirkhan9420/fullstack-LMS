@@ -57,16 +57,20 @@ Masai-LMS is a platform where you can signup as a student or admin if you signup
 ![Screenshot (2323)](https://user-images.githubusercontent.com/101388992/224734737-a94aa1d7-5fd4-4f0f-9339-409d090e011e.png)
 
 <h1>Responsive and Student can see profile image of their state famous personality  </h1>
+
 ![Screenshot (2326)](https://user-images.githubusercontent.com/101388992/224734913-e1a53eab-5390-4ad9-a603-6f68aa1120a8.png)
 
 <h1>Student can toggle profile image</h1>
+
 ![Screenshot (2325)](https://user-images.githubusercontent.com/101388992/224736009-cf053e3e-8184-4d29-9950-27b20113d3e7.png)
 
 <h1>Responsive</h1>
+
 ![Screenshot (2327)](https://user-images.githubusercontent.com/101388992/224736341-aa015517-ed2f-4b46-b611-1bdfc98665ed.png)
 
 <h1>Backend</h1>
 <h1>Assignment page</h1>
+
 ![Screenshot (2328)](https://user-images.githubusercontent.com/101388992/224736715-1ef7fe75-e597-4c58-9366-d0394cedb08c.png)
 
 
