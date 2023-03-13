@@ -1,5 +1,5 @@
 <h1 fontsize="30px">Masai-LMS</h1>
-About
+
 Masai-LMS is a platform where you can signup as a student or admin if you signup as a student then you will able to see only lectures and assignments if you signup as an admin then you can add and remove the lectures and assignments from LMS and also can add the students and remove.
 <h1>Features</h1>
 <h1>Frontend features</h1>
